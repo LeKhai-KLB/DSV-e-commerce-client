@@ -1,0 +1,44 @@
+.wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+h2.header{
+    flex: 0 1 auto;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.container{
+    width: 100%;  
+    flex: 1 1 auto;
+    display:flex;
+    background-color:gray
+}
+.categoriesContainer{
+    width: 30%;
+}
+.productsContainer{
+    width: 70%;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    gap: 20px;
+    padding: 10px
+}
+
+.productItem{
+    background-color: white;
+    text-align: center;
+    height: 160px;
+}
+
+.productItem:hover{
+    cursor: pointer;
+}
+
+.productItem:active{
+    opacity: .7;
+}

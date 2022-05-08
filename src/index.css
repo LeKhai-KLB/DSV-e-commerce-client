@@ -1,3 +1,44 @@
+@font-face {
+  font-family: Montserrat;
+  src: local(Montserrat-Regular);
+    /* url(/path/to/Montserrat-Regular.woff2) format("woff2"),
+    url(/path/to/Montserrat-Regular.woff) format("woff"),
+    url(/path/to/Montserrat-Regular.ttf) format("truetype"); */
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Montserrat;
+  src: local(Montserrat-Medium);
+    /* url(/path/to/Montserrat-Medium.woff2) format("woff2"),
+    url(/path/to/Montserrat-Medium.woff) format("woff"),
+    url(/path/to/Montserrat-Medium.ttf) format("truetype"); */
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Montserrat;
+  src: local(Montserrat-SemiBold);
+    /* url(/path/to/Montserrat-SemiBold.woff2) format("woff2"),
+    url(/path/to/Montserrat-SemiBold.woff) format("woff"),
+    url(/path/to/Montserrat-SemiBold.ttf) format("truetype"); */
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Montserrat;
+  src: local(Montserrat-Bold);
+    /* url(/path/to/Montserrat-Bold.woff2) format("woff2"),
+    url(/path/to/Montserrat-Bold.woff) format("woff"),
+    url(/path/to/Montserrat-Bold.ttf) format("truetype"); */
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +52,136 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+html, body, #root{
+  box-sizing: border-box;
+  --white: #fff;
+  --charcoal-grey: #3d3d3f;
+  --white-two: #f6f6f6;
+  --white-three: #ededed;
+  --white-four: #d4d3d3;
+  --pea-green: #82bf11;
+  --strawberry: #f63f45;
+  --pumpkin-orange: #ff7413;
+  --bright-orange: #ff6900;
+  --apricot: #ffc371;
+  --greyish-brown: #4d4d4d;
+  --pinkish-grey: #ccc;
+  --greyish: #acacac;
+  --cornflower-50: rgba(95, 109, 255, 0.5);
+  --greyish-two: #b7b7b7;
+  --white-five: #fbfbfb;
+  --dark-grey: #202124;
+  --brown-grey: #979797;
+  --white-six: #eaeaea;
+  --sandy: #f5c07c;
+  --light-gold-40: rgba(255, 213, 67, 0.4);
+  --cornflower-40: rgba(95, 109, 255, 0.4);
+  --pale-orange-40: rgba(255, 161, 95, 0.4);
+  --pale-orange: #ffa15f;
+  --apricot-50: rgba(255, 195, 113, 0.5);
+}  
+
+.Text-Style-4 {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  text-align: center;
+  color: var(--white);
+}
+.Text-Style-8 {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: var(--charcoal-grey);
+}
+.Text-Style-3 {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: var(--dark-grey);
+}
+.Text-Style {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  color: var(--dark-grey);
+}
+.Text-Style-9 {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57;
+  letter-spacing: -0.1px;
+  color: var(--greyish-brown);
+}
+.Text-Style-2 {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  text-align: center;
+  color: var(--greyish-two);
+}
+.Text-Style-10 {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  color: var(--pinkish-grey);
+}
+.Text-Style-5 {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: var(--dark-grey);
+}
+.Text-Style-7 {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: var(--greyish);
+}
+.Text-Style-6 {
+  font-family: Montserrat;
+  font-size: 10px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.07;
+  letter-spacing: normal;
+  color: var(--white);
+}
+

@@ -1,0 +1,19 @@
+.navBarContainer{
+    width: 100%;
+    height: 115px;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1.navBarLogo{
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+h1.navBarLogo:hover{
+    color: #ccc;
+    cursor: pointer;
+}

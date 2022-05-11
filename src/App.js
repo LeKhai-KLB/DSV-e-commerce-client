@@ -5,46 +5,33 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
-import NavBar from './components/Navbar'
-import Footer from './components/Footer'
+import NonAdminRoute from './routes/NonAdminRoute'
+import AdminRoute from './routes/AdminRoute'
 
 import Cart from './pages/Cart'
 import Home from './pages/Home'
 import Product from './pages/Product'
-import ProductList from './pages/ProductList'
+import Products from './pages/Products'
 import Profile from './pages/Profile'
 
 function App() {
   return (
       <Router>
-        <NavBar></NavBar>
+        <Routes>
+          {/* non admin routes */}
+          <Route element={<NonAdminRoute />}>
+            <Route index path="/" element={<Home />} exact/>
+            <Route path="/products/:fstRankCategory/:seRankCategory/:thrRankCaterogy" element={<Products />} />
+            <Route path="/product/:slug" element={<Product />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
 
-          <div className="contentContainer">
-            <Routes>
-                <Route
-                  index
-                  element={<Home/>}
-                />
-                <Route
-                  path = "profile"
-                  element={<Profile/>}
-                />
-                <Route
-                  path = "productList/:fstRankCategory/:seRankCategory/:thrRankCaterogy"
-                  element={<ProductList/>}
-                />
-                <Route
-                  path = "product/:slug"
-                  element={<Product/>}
-                />
-                <Route
-                  path = "cart"
-                  element={<Cart/>}
-                />
-            </Routes>
-          </div>
+          {/* admin routes */}
+          <Route path="admin" element={<AdminRoute />} exact/>
 
-        <Footer></Footer>
+        </Routes>
+
       </Router>
   )
 }

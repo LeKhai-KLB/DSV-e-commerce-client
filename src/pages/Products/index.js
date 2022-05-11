@@ -6,7 +6,7 @@ import { memo } from 'react'
 const dumpProductData = ['product1', 'product2', 'product3', 'product4', 'product5', 'product6']
 const third_rank_categories = ['all short', 'jean short', 'kaki short']
 
-function ProductList() {
+function Products() {
     const params = useParams()
     console.log(`${params.fstRankCategory}/${params.seRankCategory}/${params.thrRankCaterogy}`)
     
@@ -18,7 +18,7 @@ function ProductList() {
                     <h3> cartegories </h3>
                     <ul>
                         {third_rank_categories.map((e, i) => (
-                            <Link key = {i} to = {`../productList/${params.fstRankCategory}/${params.seRankCategory}/${e.replace(' ', '_')}`}>{e}<br></br></Link>
+                            <Link key = {i} to = {`../products/${params.fstRankCategory}/${params.seRankCategory}/${e.replace(' ', '_')}`}>{e}<br></br></Link>
 
                         ))}
                     </ul>
@@ -33,4 +33,4 @@ function ProductList() {
     )
 }
 
-export default memo(ProductList)
+export default memo(Products)

@@ -11,7 +11,7 @@ PURGE,
 REGISTER, } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-import tempSlice from "./slices/tempSlice";
+import tempSlice from "./slices/tempSlice"
 
 const persistConfig = {
     key: 'root',

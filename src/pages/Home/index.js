@@ -27,7 +27,7 @@ function Home() {
                         <li>
                             men
                             <ul>
-                                <Link to = "/productList/men/short/all_short">short</Link>
+                                <Link to = "/products/men/short/all_short">short</Link>
                             </ul>
                         </li>
                         <li>lady</li>

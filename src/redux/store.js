@@ -11,7 +11,7 @@ PURGE,
 REGISTER, } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-import tempSlice from "./slices/tempSlice"
+import authReducer from './slices/authSlice'
 
 const persistConfig = {
     key: 'root',
@@ -19,7 +19,7 @@ const persistConfig = {
 }
 
 const reducer = combineReducers({
-    temp: tempSlice.reducer
+    auth: authReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

@@ -1,5 +1,5 @@
 import './App.css';
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,21 +14,32 @@ import Product from './pages/Product'
 import Products from './pages/Products'
 import Profile from './pages/Profile'
 
+import AdminLogin from './pages/AdminLogin'
+import AdminOrders from './pages/AdminOrders'
+import AdminProducts from './pages/AdminProducts'
+
 function App() {
+  const isLogin = useRef(false)
+
   return (
       <Router>
         <Routes>
+
           {/* non admin routes */}
           <Route element={<NonAdminRoute />}>
             <Route index path="/" element={<Home />} exact/>
-            <Route path="/products/:fstRankCategory/:seRankCategory/:thrRankCaterogy" element={<Products />} />
-            <Route path="/product/:slug" element={<Product />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="products/:fstRankCategory/:seRankCategory/:thrRankCaterogy" element={<Products />} />
+            <Route path="product/:slug" element={<Product />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
 
           {/* admin routes */}
-          <Route path="admin" element={<AdminRoute />} exact/>
+          <Route path="admin/login" element={<AdminLogin isLogin={isLogin} />} />
+          <Route path="admin" element={<AdminRoute isLogin={isLogin} />}>
+            <Route index element={<AdminOrders />} exact/>
+            <Route path="products" element={<AdminProducts />}/>
+          </Route>
 
         </Routes>
 

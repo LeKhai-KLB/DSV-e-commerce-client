@@ -3,8 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     user: null,
     admin: null,
-    pendingState: false,
-    errorMessage: ''
+    pendingState: false
 }
 
 const authSlice = createSlice({
@@ -13,25 +12,21 @@ const authSlice = createSlice({
         ...initialState
     },
     reducers: {
-        loginStart: (state) => {
-            if(state.errorMessage !== ''){
-                state.errorMessage = ''
-            }
+        start: (state) => {
             state.pendingState = true
         },
-        loginSuccessful: (state, action) => {
+        successful: (state, action) => {
             state.pendingState = false
-            state.admin = {...action.payload, jwt: 'bearer ' + action.payload.jwt}
+            if(action.payload?.isAdmin)
+                state.admin = {...action.payload, jwt: 'bearer ' + action.payload.jwt}
+            else
+                state.user = {...action.payload, jwt: 'bearer ' + action.payload.jwt}
         },
-        loginFailure: (state, action) => {
-            state.pendingState = false
-            state.errorMessage = action.payload
-        },
-        logOut: (state) => {
+        logout: (state) => {
             return initialState
         }
     }
 })
 
-export const { loginStart, loginSuccessful, loginFailure, logOut } = authSlice.actions
+export const { start, successful, logout } = authSlice.actions
 export default authSlice.reducer

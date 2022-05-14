@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { Outlet, Navigate } from 'react-router-dom'
-import { logOutService, getAdminInfoService } from '../../services/authServices'
+import { logoutService, getAdminInfoService } from '../../services/authServices'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,7 +10,7 @@ function AdminRoute() {
     const adminInfo = getAdminInfoService()
 
     const handleLogOut = () => {
-        logOutService(dispatch)
+        logoutService(dispatch)
         nav('../admin/login')
     }
 

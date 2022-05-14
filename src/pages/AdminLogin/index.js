@@ -8,12 +8,12 @@ import 'react-toastify/dist/ReactToastify.css';
 // image
 import rectangle_5 from '../../assets/admin/rectangle-5.png'
 import rectangle_5_2x from '../../assets/admin/rectangle-5@2x.png'
-import logo from '../../assets/general/logo.png'
-import logo_2x from '../../assets/general/logo@2x.png'
-import logo_3x from '../../assets/general/logo@3x.png'
+import logo from '../../assets/admin/logo.png'
+import logo_2x from '../../assets/admin/logo@2x.png'
+import logo_3x from '../../assets/admin/logo@3x.png'
 
 // selector
-import { adminSelector, errorMessageSelector } from '../../redux/selector'
+import { adminSelector } from '../../redux/selector'
 
 // css styles
 import styles from './adminLogin.module.css'
@@ -24,7 +24,6 @@ function AdminLogin() {
     const nav = useNavigate()
     const dispatch = useDispatch()
     const overlay = useRef()
-    const errorMessage = useSelector(errorMessageSelector)
     const admin = useSelector(adminSelector)
 
     const handleSubmit = async (e) => {
@@ -33,14 +32,14 @@ function AdminLogin() {
         overlay.current.classList.toggle(styles.show)
 
         try {
-            await loginService(dispatch, {
+            const res = await loginService(dispatch, {
                 email: e.target.Email.value,
                 password: e.target.Password.value
             })
-            if(errorMessage !== '') {
+            if(res?.errorMessage) {
                 overlay.current.classList.toggle(styles.show)
                 toast.dismiss(loadingId)
-                toast.error(errorMessage)
+                toast.error(res?.errorMessage)
             }
             else {
                 toast.dismiss(loadingId)

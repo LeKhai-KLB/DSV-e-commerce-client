@@ -1,19 +1,249 @@
-.navBarContainer{
+.navBarContainer {
     width: 100%;
     height: 115px;
-    background-color: red;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
+    background-color: var(--white);
+    display:flex;
+    flex-flow: column;
+    z-index: 2
+}
+
+.font {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+}
+
+.activeStyle:active {
+    opacity: .7;
+}
+
+.hidden {
+    display: none;
+}
+
+div.controllContainer {
+    width: 100%;
+    flex: 0 0 69px;
+    border-bottom: 1px solid #ececec;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-h1.navBarLogo{
-    padding: 0;
-    margin: 0;
+img.logo {
+    width: 132px;
+    height: 27px;
+    object-fit: contain;
+    object-position: center;
+    cursor: pointer;
+}
+
+/* left container */
+div.leftContainer {
+    width: calc((100% - 132px)/2)
+}  
+
+div.searchbar {
+    width: 154px;
+    height: 25px;
+    margin-left: 130px;
+    border-radius: 17px;
+    padding: 5px 12px 5px 15px;
+    border: solid 1px var(--greyish-two);
+    display:flex;
+}
+
+img.searchIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+img.searchIcon:active {
+    opacity: .3
+}
+
+input.searchInput {
+    outline: none;
+    border: none;
+    width: calc(154px - 24px);
+    
+}
+
+input.searchInput:focus {
+    outline: none;
+    border: none;
+}
+
+input.searchinput::placeholder {
+    color: var(--pinkish-grey);
+}
+
+/* right container */
+div.rightContainer {
+    width: calc((100% - 132px)/2);
+    display:flex;
+    justify-content: flex-end;
+}   
+
+div.cartButton {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    margin-right: 130px;
+    margin-top: 7px;
+    cursor: pointer;
+}
+
+img.cartIcon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+div.cartNotification {
+    width: 18px;
+    height: 18px;
+    background-color: var(--pale-orange);
+    position: absolute;
+    top: -7px;
+    left: 10px;
+    border-radius: 50%;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.83 !important;
+    color: var(--white);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* un logged in Box */
+div.UnloggedInBox{
+    margin-right: 29px;
     text-align: center;
 }
 
-h1.navBarLogo:hover{
-    color: #ccc;
+button.registerButton {
+    margin-right: 24px;
+    border: none;
+    outline: none;
+    background-color: var(--white);
+    color: var(--greyish-brown);
     cursor: pointer;
 }
+
+button.loginButton {
+    width: 120px;
+    height: 35px;
+    border-radius: 100px;
+    border: solid 1px var(--pale-orange);
+    background-color: var(--white);
+    color: var(--pale-orange);
+    font-weight: bold !important;
+    cursor: pointer;
+}
+
+/* logged in Box */
+
+div.loggedInBox {
+    margin-right: 29px;
+    position: relative;
+    display:flex;
+    align-items: center;
+}
+
+.loggedInBox > .avatar {
+    width: 28px;
+    height: 28px;
+    margin: 1.5px 0px;
+    object-fit: contain;
+    object-position: center;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    border: 2px solid var(--pale-orange-40);
+    cursor: pointer;
+}
+
+.loggedInBox > .settingBox {
+    width: 181px;
+    box-shadow: 0 14px 30px 0 rgba(0, 0, 0, 0.14);
+    border: solid 0.5px var(--white-six);
+    background-color: var(--white-five);
+    font-size: 12px !important;
+    line-height: 1.83 !important;
+    font-weight: 500 !important;
+    color: var(--greyish-brown);
+    position: absolute;
+    top: 53px;
+    right: 0px
+}
+
+.settingBox > .settingButton {
+    height: 29px;
+    padding: 7px 0px 0px 13px;
+    cursor: pointer;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: #ececec;
+}
+
+/* category container */
+div.categoryContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--dark-grey) !important;
+    font-weight: 500 !important;
+    position: relative;
+}
+
+.categoryContainer > .rootNode {
+    margin: 0px 9.5px;
+    display:flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.arrowIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* child node container */
+.childNodeContainer {
+    position: absolute;
+    height: 55px;
+    top: calc(100% + 6px);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    border: solid 0.5px var(--white-six);
+    background-color: var(--white-five);
+    color: var(--dark-grey) !important;
+}
+
+.childNode {
+    height: 100%;
+    margin: 0;
+    padding: 0 calc(37.5px / 2);
+    cursor: pointer;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+

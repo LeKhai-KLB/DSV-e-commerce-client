@@ -1,0 +1,44 @@
+div.searchBarContainer {
+    width: 280px;
+    height: 48px;
+    border-radius: 2px;
+    border: solid 1px var(--white-three);
+    background-color: var(--white);
+    display: flex;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: var(--greyish);
+}
+
+div.searchButton {
+    flex: 0 0 52px;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+div.searchButton:active {
+    opacity: .7;
+}
+
+img.searchIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    opacity: .5;
+}
+
+input.searchInput {
+    flex: 1;
+    margin-right: 20px;
+    outline: none;
+    border: none;
+}

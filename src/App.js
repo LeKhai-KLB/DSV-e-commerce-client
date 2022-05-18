@@ -17,6 +17,7 @@ import Profile from './pages/Profile'
 import AdminLogin from './pages/AdminLogin'
 import AdminOrders from './pages/AdminOrders'
 import AdminProducts from './pages/AdminProducts'
+import AdminProductInfo from './pages/AdminProductInfo'
 
 function App() {
   const isLogin = useRef(false)
@@ -39,6 +40,8 @@ function App() {
           <Route path="admin" element={<AdminRoute isLogin={isLogin} />}>
             <Route index element={<AdminOrders />} exact/>
             <Route path="products" element={<AdminProducts />}/>
+            <Route path="products/add_product" element={<AdminProductInfo />}/>
+            <Route path="products/edit_product" element={<AdminProductInfo />}/>
           </Route>
 
         </Routes>

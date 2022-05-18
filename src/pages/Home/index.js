@@ -1,12 +1,13 @@
 import { memo } from "react"
 import {Link} from 'react-router-dom'
+import styles from './home.module.css'
 
 const tempNavigate = ['profile', 'cart']
 
 function Home() {
     console.log('home')
     return (
-        <>
+        <div className={styles.homePage} >
             <h1>Home</h1>
             <ul>
                 {
@@ -36,7 +37,7 @@ function Home() {
                     </ul>
                 </li>
             </ul>
-        </>
+        </div>
     )
 }
 

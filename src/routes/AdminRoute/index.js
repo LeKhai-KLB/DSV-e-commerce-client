@@ -3,6 +3,8 @@ import { Outlet, Navigate } from 'react-router-dom'
 import { logoutService, getAdminInfoService } from '../../services/authServices'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import styles from './adminRoute.module.css'
+import SideBar from '../../components/AdminComponent/SideBar'
 
 function AdminRoute() {
     const dispatch = useDispatch()
@@ -14,12 +16,15 @@ function AdminRoute() {
         nav('../admin/login')
     }
 
-    if(adminInfo) {
+    if(adminInfo === null) {
         return (
-            <>
-                <button onClick={handleLogOut} >Log out</button>
-                <Outlet />
-            </>
+            <div className={styles.adminRouteContainer}>
+                <SideBar />
+                <div className={styles.pageContainer}>
+                    <div className={styles.HeaderContainer}></div>
+                    <Outlet />
+                </div>
+            </div>
         )
     }
     else{

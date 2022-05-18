@@ -1,0 +1,16 @@
+div.adminRouteContainer {
+    width: 100%;
+    background-color: var(--white-two);
+    display: flex;
+}
+
+div.pageContainer {
+    flex: 1;
+    margin: 0px 20px 0px 0px;
+    display: flex;
+    flex-flow: column;
+}
+
+div.HeaderContainer {
+    flex: 0 0 104px;
+}

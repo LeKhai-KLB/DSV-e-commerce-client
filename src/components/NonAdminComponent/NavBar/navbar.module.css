@@ -212,6 +212,7 @@ div.categoryContainer {
 }
 
 .categoryContainer > .rootNode {
+    height: 100%;
     margin: 0px 9.5px;
     display:flex;
     align-items: center;
@@ -234,6 +235,7 @@ div.categoryContainer {
     border: solid 0.5px var(--white-six);
     background-color: var(--white-five);
     color: var(--dark-grey) !important;
+    display: flex;
 }
 
 .childNode {

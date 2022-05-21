@@ -26,18 +26,28 @@ function NavBar(){
     const user = useSelector(userSelector)
     const [categoriesStore, setCategoiesStore] = useState([])
     const [rootCategories, setRootCategories] = useState([])
+    const [parent, setParent] = useState('')
     const [childCategories, setChildCategories] = useState([])
+    const [showChildCategory, setShowChildCategory] = useState(false)
 
     const handleShowChildNode = (r) => {
         const childNodes = categoriesStore.filter(c => c.parent === r)
         if(childNodes.length > 0) {
             setChildCategories(childNodes)
-            document.querySelector(`.${styles.childNodeContainer}`)?.classList?.toggle(styles.hidden)
+            if(parent !== r) {
+                setShowChildCategory(true)
+                setParent(r)
+            }
+            else{
+                setShowChildCategory(false)
+                setParent('')
+            }
         }
     }
 
     const handleOnclickChildCategories = (c) => {
-        document.querySelector(`.${styles.childNodeContainer}`)?.classList?.toggle(styles.hidden)
+        setShowChildCategory(false)
+        setParent('')
         nav(`./products/${c.parent}/${c.name}/All`)
     }
 
@@ -98,27 +108,29 @@ function NavBar(){
             <div className={styles.categoryContainer + ' '  + styles.font} >
                 {
                     rootCategories && rootCategories.map((r, index) => (
-                        <div key={index} className={styles.rootNode + ' ' + styles.activeStyle} onClick={() => handleShowChildNode(r)}>
+                        <div key={index} className={styles.rootNode} onClick={() => handleShowChildNode(r)}>
                             <span>{r}</span>
                             <img src={arrowIcon} className={styles.arrowIcon} alt='arrow' />
                         </div>
                     ))
                 }
-                    <div 
-                        className={styles.childNodeContainer + ' ' + styles.activeStyle + ' ' + styles.hidden} 
-                    >
-                    {
-                        childCategories && childCategories.map((c, index) => (
-                            <p 
-                                key={index} 
-                                className={styles.childNode + ' ' + styles.font} 
-                                onClick={() => handleOnclickChildCategories(c)}
-                            >
-                                {c.name}
-                            </p>  
-                        ))
+                    {showChildCategory &&   
+                        <div 
+                            className={`${styles.childNodeContainer} ${styles.activeStyle}`} 
+                        >
+                            {
+                                childCategories && childCategories.map((c, index) => (
+                                    <p 
+                                        key={index} 
+                                        className={styles.childNode + ' ' + styles.font} 
+                                        onClick={() => handleOnclickChildCategories(c)}
+                                    >
+                                        {c.name}
+                                    </p>  
+                                ))
+                            }
+                        </div>
                     }
-                    </div>
                 
             </div>
         </div>

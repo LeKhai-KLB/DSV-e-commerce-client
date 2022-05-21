@@ -2,7 +2,7 @@ import { memo, useState, useRef, useEffect } from "react";
 import styles from './adminProductInfo.module.css'
 import SelectBox from '../../components/AdminComponent/SelectBox'
 import axios from "axios";
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getImageURL } from '../../services/uploadImageService'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,6 +18,7 @@ import {
     getAllColorsAPI,
     addProductAPI,
     updateProductAPI,
+    getProductByIdAPI
 }
 from '../../APIs'
 
@@ -31,8 +32,9 @@ function AdminProductInfo() {
     const [sizeList, setSizeList] = useState([])
     const [quantity, setQuantity] = useState({s: 0, m: 0, l: 0})
     const [description, setDescription] = useState('')
-    const {state} = useLocation()
+    const currentId = useParams().id
     const [initData, setInitData] = useState({})
+
 
     const nav = useNavigate()
 
@@ -60,6 +62,7 @@ function AdminProductInfo() {
     }
 
     const handleCrashImage = (i) => {
+        input.current.value = ''
         const imagePlaceholder = document.getElementById('image ' + i).children[0]
         const imageAddButton = document.getElementById('imageButton ' + i)
         const url = imagePlaceholder.src
@@ -135,33 +138,26 @@ function AdminProductInfo() {
             document.querySelector('.' + styles.validateMessage)?.classList?.add(styles.hidden)
             const newPhotoList = photos.filter(f => f !== null)
 
-            if(state?.images) {
-                console.log('sadfsagadh')
-                handleUploadProductInfo(state?.images, loadingId, null, updateProductAPI, 'update')
+            if(newPhotoList.length !== 0) {
+                Promise.all(newPhotoList.map(f => getImageURL(f)))
+                    .then((values) => {
+                        if(Object.keys(initData).length === 0)
+                            handleUploadProductInfo(values, loadingId, null, addProductAPI, 'add')
+                        else 
+                            handleUploadProductInfo(values, loadingId, null, updateProductAPI, 'update')
+                    })
+                    .catch((error) => {
+                        if(Object.keys(initData).length === 0)
+                            handleUploadProductInfo(null, loadingId, error.message, addProductAPI, 'add')
+                        else
+                            handleUploadProductInfo(null, loadingId, error.message, updateProductAPI, 'update')
+                    })
             }
             else {
-                if(newPhotoList.length !== 0){
-                    console.log(newPhotoList[0].name)
-                    Promise.all(newPhotoList.map(f => getImageURL(f)))
-                        .then((values) => {
-                            if(Object.keys(initData).length === 0)
-                                handleUploadProductInfo(values, loadingId, null, addProductAPI, 'add')
-                            else 
-                                handleUploadProductInfo(values, loadingId, null, updateProductAPI, 'update')
-                        })
-                        .catch((err) => {
-                            if(Object.keys(initData).length === 0)
-                                handleUploadProductInfo(null, loadingId, err.message, addProductAPI, 'add')
-                            else
-                                handleUploadProductInfo(null, loadingId, err.message, updateProductAPI, 'update')
-                        })
-                }
-                else {
-                    if(Object.keys(initData).length === 0)
-                        handleUploadProductInfo(null, loadingId, null, addProductAPI, 'add')
-                    else
-                        handleUploadProductInfo(null, loadingId, null,updateProductAPI, 'update')
-                }
+                if(Object.keys(initData).length === 0)
+                    handleUploadProductInfo(null, loadingId, null, addProductAPI, 'add')
+                else
+                    handleUploadProductInfo(null, loadingId, null,updateProductAPI, 'update')
             }
         }
     }
@@ -180,9 +176,10 @@ function AdminProductInfo() {
             colors: newColorsList,
             quantity: quantity,
             images: photoList ? photoList:[],
+            inStock: (initData?.instock ? initData.inStock:quantity)
         }
         if(action === 'update') {
-            uploadData._id = state?._id
+            uploadData._id = currentId
         }
         try{
             const {data} = await axios.post(api, uploadData)
@@ -213,37 +210,49 @@ function AdminProductInfo() {
         })
     }
 
-    useEffect(() => {
-        if(state) {
-            if(state?.images?.length !== 0) {
-                state?.images?.forEach((url, i) => {
-                    handleSetupImage(url, i)
-                })
-            }
-            setName(state?.name)
-            const categoryNames = state.categories.map(c => c.name)
-            setInitData(prev => {
-                const temp = {...prev}
-                temp.categories = categoryNames
-                return temp
-            })
-            setInitData(prev => {return {...prev, brand: state?.brand?.name}})
-            setPrice(state?.price)
-            const colorObjects = state?.colors.map(c => {return {name:c.title, value:{
-                title: c.title, value: c.value
-            }}})
-            setInitData(prev => {return {...prev, colors: colorObjects}})
-            setInitData(prev => {
-                const temp = []
-                for(const [key, value] of Object.entries(state?.quantity)){
-                    if(value !== 0)
-                        temp.push(key)
+    const handleFirstLoad = async () => {
+        try {
+            const {data} = await axios.get(getProductByIdAPI + '?id=' + currentId)
+            if(data.status === 200) {
+                if(data.resultData?.images?.length !== 0) {
+                    data.resultData?.images?.forEach((url, i) => {
+                        handleSetupImage(url, i)
+                    })
                 }
-                return {...prev, sizeList: temp}
-            })
-            setQuantity(state?.quantity)
-            setDescription(state?.description)
-            setColorList(colorObjects)
+                setName(data.resultData?.name)
+                const categoryNames = data.resultData.categories.map(c => c.name)
+                setInitData(prev => {
+                    const temp = {...prev}
+                    temp.categories = categoryNames
+                    return temp
+                })
+                setInitData(prev => {return {...prev, brand: data.resultData?.brand?.name}})
+                setPrice(data.resultData?.price)
+                const colorObjects = data.resultData?.colors.map(c => {return {name:c.title, value:{
+                    title: c.title, value: c.value
+                }}})
+                setInitData(prev => {return {...prev, colors: colorObjects}})
+                setInitData(prev => {
+                    const temp = []
+                    for(const [key, value] of Object.entries(data.resultData?.quantity)){
+                        if(value !== 0)
+                            temp.push(key)
+                    }
+                    return {...prev, sizeList: temp}
+                })
+                setQuantity(data.resultData?.quantity)
+                setDescription(data.resultData?.description)
+                setColorList(colorObjects)
+            }
+        }
+        catch(err) {
+            console.error(err.message)
+        }
+    }
+
+    useEffect(() => {
+        if(currentId) {
+            handleFirstLoad()
         }
     }, [])
 
@@ -262,7 +271,7 @@ function AdminProductInfo() {
                 {
                     [...Array(4)].map((e, i) => (
                         <div key={i} className={styles.imageContainer} >
-                            <input ref={input} style={{display: 'none'}} type="file" onChange={e => handleChangeImageInput(e)} />
+                            <input id={'input ' + i} ref={input} style={{display: 'none'}} type="file" onChange={e => handleChangeImageInput(e)} />
                             <div id={'imageButton ' + i} className={styles.imageButton} onClick={() => handleClickAddImage(i)}>
                                 <img src={addIcon} className={styles.largeIcon} alt=' ' />
                                 <span className={styles.imageButtonTitle}>Add photo</span>

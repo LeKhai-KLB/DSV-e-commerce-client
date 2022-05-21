@@ -6,9 +6,7 @@ import PaginationBar from '../../components/AdminComponent/PaginationBar'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { 
-getProducts_SortAtoZAPI, 
-getProducts_SortZtoAAPI, 
-getProducts_SortByDateAddedAPI,
+getProductsByFilterAndSortValue,
 deleteProductAPI
 } from '../../APIs'
 
@@ -24,7 +22,7 @@ function AdminProducts() {
     const [sortValue, setSortValue] = useState('Date added')
     const [searchValue, setSearchValue] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
-    const [currentMaxShow, setCurrentMaxShow] = useState(7)
+    const [currentMaxShow, setCurrentMaxShow] = useState(9)
     const [showActionsBox, setShowActionsBox] = useState(0)
     const [productListSlice, setProductListSlice] = useState([])
     const [recordCount, setRecordCount] = useState(0)
@@ -32,7 +30,11 @@ function AdminProducts() {
 
     const handleFirstLoad = async () => {
         try {
-            const {data} = await axios.get(getProducts_SortByDateAddedAPI + '?search=&&first=0&&last=' + currentMaxShow)
+            const {data} = await axios.post(getProductsByFilterAndSortValue, {
+                searchValue: searchValue,
+                sortValue: sortValue,
+                slice: '0-' + currentMaxShow
+            })
             if(data.status === 200) {
                 setProductListSlice(data.resultData.products)
                 setRecordCount(data.resultData.remainingLength)
@@ -46,21 +48,15 @@ function AdminProducts() {
         }
     }
 
-    const getSortOrder = () => {
-        if(sortValue === 'Date added') 
-            return getProducts_SortByDateAddedAPI
-        else if(sortValue === 'A - Z')
-            return getProducts_SortAtoZAPI
-        else if(sortValue === 'Z - A')
-            return getProducts_SortZtoAAPI
-    }
-
     const reLoadProductList = async () => {
-        const sortOrder = getSortOrder()
         const last = currentPage * currentMaxShow
         const first = last-currentMaxShow <= 0 ? 0:last-currentMaxShow
         try {
-            const {data} = await axios.get(sortOrder + `?search=${searchValue === '' ? '': searchValue}&&first=${first}&&last=${last}`)
+            const {data} = await axios.post(getProductsByFilterAndSortValue, {
+                searchValue: searchValue,
+                sortValue: sortValue,
+                slice: first + '-' + last
+            })
             if(data.status === 200) {
                 setProductListSlice(data.resultData.products)
                 setRecordCount(data.resultData.remainingLength)
@@ -158,16 +154,19 @@ function AdminProducts() {
                                             <div className={styles.displayFlexEffect}>
                                                 <img src={e?.images.length !== 0 ? e?.images[0]:placeholder} alt="product" className={styles.productImageEntry} />
                                                 <div className={styles.textEntry}>
-                                                    <span title="Button-Down Denim Mini Dress sadjfh sadfhsdf sadfh sadfhjsdfg">{e?.name}</span>
+                                                    <span title={e?.name}>{e?.name}</span>
                                                     <span className={styles.textEntryCategory}>{e?.categories?.map(c => c.name).join(', ')}</span>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td style={{width: '200px'}} >4 / 10</td>
+                                        <td style={{width: '200px'}} >
+                                            {Object.values(e.quantity).reduce((a, b) => a + b) - Object.values(e.inStock).reduce((a, b) => a + b)}/ 
+                                            {Object.values(e.quantity).reduce((a, b) => a + b)}
+                                        </td>
                                         <td style={{width: '260px'}}>{
                                             Date(e?.createdAt).split(' ').slice(0, 4).join(', ')
                                         }</td>
-                                        <td style={{width: '200px'}}>{e?.price}</td>
+                                        <td style={{width: '200px'}}>{e?.price}.00</td>
             
                                         <td style={{paddingRight: '24px'}}>
                                             <div 
@@ -191,7 +190,7 @@ function AdminProducts() {
                                             <td className={styles.actionsBox}>
                                                 <div 
                                                     className={styles.actionsButton} 
-                                                    onClick={() => nav('./edit_product', {state: e})}
+                                                    onClick={() => nav('./edit_product/' + e._id, {state: e})}
                                                 >
                                                     <img src={editIcon} className={styles.actionsIcon} alt="edit" />
                                                     Edit
@@ -211,7 +210,7 @@ function AdminProducts() {
                 </table>
 
                 {/* pagination */}
-                <PaginationBar entriesQty={recordCount} maxShowEntries={7} onChangePage={setCurrentPage} onchangeMaxShow={setCurrentMaxShow}/>
+                <PaginationBar entriesQty={recordCount} maxShowEntries={9} onChangePage={setCurrentPage} onchangeMaxShow={setCurrentMaxShow}/>
             </div>
         </div>
     )

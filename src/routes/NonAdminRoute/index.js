@@ -47,7 +47,7 @@ function NonAdminRoute() {
     }
 
     return (
-        <div className="nonAdminContainer">
+        <div className={styles.nonAdminContainer}>
             <requiredAuthContext.Provider value={{toggleShowRegisterBox, toggleShowLoginBox, toggleShowForgotPasswordBox}}>
                 <NavBar />
                 {showRegisterBox && <RegisterBox />}

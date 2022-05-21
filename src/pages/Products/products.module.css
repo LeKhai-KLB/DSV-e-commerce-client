@@ -1,0 +1,194 @@
+div.productPageContainer {
+    width: 100%;
+    height: 1685px;
+    display: flex;
+    flex-flow: column;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    text-align: center;
+    color: var(--dark-grey);
+    text-transform: capitalize;
+}
+
+/* general styles */
+.highlight {
+    color: var(--bright-orange) !important;
+}
+
+/* page title */
+div.pageTitleContainer {
+    width: 100%;
+    flex: 0 0 111px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* content container */
+div.contentContainer {
+    width: 100%;
+    flex: 0 0 1539px;
+    display: flex;
+}
+
+/* handle side container */
+div.handleSideContainer {
+    flex: 0 0 181px;
+    height: 100%;
+}
+
+/* category box */
+div.categoryBox {
+    width: 100%;
+    padding-bottom: 45px;
+    border-bottom: solid 0.5px var(--brown-grey);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+span.boxTitle {
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: var(--dark-grey);
+    margin-bottom: 20px;
+}
+
+span.categorySubTitle {
+    width: 100%;
+    padding: 9px 0px;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: -0.1px;
+    color: var(--greyish-brown);
+    text-align: left;
+    cursor: pointer;
+}
+
+/* filter box */
+div.filterBox {
+    width: 100%;
+    margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+span.mtb_25 {
+    margin-bottom: 25px;
+}
+
+/* productsContainer */
+div.productsContainer {
+    flex: 1;
+    margin-left: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* top products container */
+div.topProductsContainer {
+    display: flex;
+    flex: 0 0 32px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* middle products container */
+div.middleProductsContainer {
+    width: 100%;
+    flex: 1;
+    margin-top: 14px;
+    margin-bottom: 34px;
+}
+
+div.gridContainer {
+    display: grid;
+    grid-template-columns: 196px 196px 196px 196px 196px;
+    gap: 20px;
+}
+
+div.productCard {
+    height: 345px;
+    cursor: pointer;
+}
+
+img.cardImage {
+    width: 100%;
+    height: 269px;
+    margin-bottom: 10px;
+    object-fit: cover;
+    object-position: center;
+}
+
+div.cardTitle {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: var(--dark-grey);
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    white-space: initial;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+p.cardPrice {
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.83;
+    letter-spacing: normal;
+    color: var(--greyish-brown);
+    width: 100%;
+}
+
+div.NofoundMessage {
+    grid-column: 2/5;
+    width: 100%;
+    padding-top: 59px;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: var(--greyish-two);
+    display: flex;
+    justify-content: center;
+}
+
+/* bottom products container */
+div.bottomProductsContainer {
+    width: 100%;
+    flex: 0 0 32px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+
+

@@ -7,7 +7,7 @@ const tempNavigate = ['profile', 'cart']
 function Home() {
     console.log('home')
     return (
-        <div className={styles.homePage} >
+        <div className={styles.homePageContainer} >
             <h1>Home</h1>
             <ul>
                 {

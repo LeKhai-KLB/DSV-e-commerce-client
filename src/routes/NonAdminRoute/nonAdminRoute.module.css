@@ -1,8 +1,12 @@
 .contentContainer {
-    width: 100%;
-    min-height: 1011px;
+    width: calc(100% - 258px);
+    min-height: 711px;
 }
 
 .nonAdminContainer {
-    position: relative
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

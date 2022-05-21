@@ -1,0 +1,37 @@
+.filterDropdownBarContainer {
+    width: 100%;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: var(--dark-grey);
+    border-bottom: solid 0.5px var(--pinkish-grey);
+}
+
+/* general styles */
+div.dashBorder {
+    border-bottom:dashed 0.5px var(--pinkish-grey);
+}
+
+.rotate180Deg {
+    transform: rotate(180deg);
+}
+
+/*  dropdown bar */
+div.dropdownBar {
+    width: 100%;
+    padding: 9px 0px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer
+}
+
+img.dropdownIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+}

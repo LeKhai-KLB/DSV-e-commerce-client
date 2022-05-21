@@ -1,0 +1,18 @@
+div.filterColorBoxContainer {
+    width: 100%;
+    padding: 15px 0px;
+    display: grid;
+    grid-template-columns: 30px 30px 30px 30px;
+    gap: 18px;
+}
+
+div.colorBox {
+    padding: 56.25%;
+    border-radius: 50%;
+    opacity: .4;
+    cursor: pointer;
+}
+
+div.highlight {
+    opacity: 1;
+}

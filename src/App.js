@@ -30,7 +30,7 @@ function App() {
           <Route element={<NonAdminRoute />}>
             <Route index path="/" element={<Home />} exact/>
             <Route path="products/:fstRankCategory/:seRankCategory/:thrRankCaterogy" element={<Products />} />
-            <Route path="product/:slug" element={<Product />} />
+            <Route path="product/:id" element={<Product />} />
             <Route path="cart" element={<Cart />} />
             <Route path="profile" element={<Profile />} />
           </Route>
@@ -41,7 +41,7 @@ function App() {
             <Route index element={<AdminOrders />} exact/>
             <Route path="products" element={<AdminProducts />}/>
             <Route path="products/add_product" element={<AdminProductInfo />}/>
-            <Route path="products/edit_product" element={<AdminProductInfo />}/>
+            <Route path="products/edit_product/:id" element={<AdminProductInfo />}/>
           </Route>
 
         </Routes>

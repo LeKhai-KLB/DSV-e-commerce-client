@@ -3,6 +3,7 @@ div.filterSizeBoxContainer {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    max-width: 181px;
 }
 
 div.sizeBox {

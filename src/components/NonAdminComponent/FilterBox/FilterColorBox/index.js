@@ -3,51 +3,72 @@ import styles from './filterColorBox.module.css'
 import { getAllColorsAPI } from '../../../../APIs'
 import axios from 'axios'
 
-function FilterColorBox({onChange, value}) {
-    
-    const [colorPallete, setColorPallete] = useState([])
-    const [color, setColor] = useState({title: 'black', value: '#000'})
-    
-    const handleLoadColor = async () => {
-        try {
-            const { data } = await axios.get(getAllColorsAPI)
-            if(data.status === 200) {
-                const newColorData = data.resultData.map(c => {return{title: c.title, value: c.value}})
-                setColorPallete(newColorData)
-            }
-            else {
-                throw new Error(data.errorMessage)
+function FilterColorBox({onChange, value, initData=null, style=null, required=false, multiChoice=false}) {
+
+    const [list, setList] = useState(value ? value:[])
+
+    const handleSetColor = (id) => {
+        if(id === value) {
+            if(!required) {
+                onChange('color', '')
             }
         }
-        catch(err) {
-            console.log(err.message)
+        else {
+            onChange('color', id)
         }
     }
 
-    const handleSetColor = (c) => {
-        if(c.title !== color.title) {
-            setColor(c)
-            onChange(c)
+    const checkValue = (id) => {
+        return list.findIndex(l => l === id)
+    }
+
+    const handleSetColorList = (id) => {
+        const index = checkValue(id)
+        if(index !== -1) {
+            const temp = list
+            temp.splice(index, 1)
+            setList([...temp])
+        }   
+        else {
+            setList([...list, id])
         }
     }
 
     useEffect(() => {
-        handleLoadColor()
-        if(value) {
-            setColor(value)
+        if(list.length === initData.length) {
+            onChange('colors', '')
         }
-    }, [])
+        else {
+            const queryString = list.join('-')
+            onChange('colors', queryString)
+        }
+    }, [list])
 
     return (
-        <div className={styles.filterColorBoxContainer}>
+        initData &&
+        <div className={styles.filterColorBoxContainer} style={style !== null ? style:{margin: '0px'}}>
             {
-                colorPallete.map((c, i) => (
+                initData.map((c, i) => (
                     <div 
+                        title={c.title}
                         key={i}
-                        className={`${styles.colorBox} ${Object.entries(color).toString() === Object.entries(c).toString() ? styles.highlight:''}`}
+                        className={`${styles.colorBox}`}
                         style={{backgroundColor: c.value}} 
-                        onClick={() => handleSetColor(c)}
-                    />
+                        onClick={() => {
+                            if(multiChoice){
+                                handleSetColorList(c._id)
+                            }
+                            else {
+                                handleSetColor(c._id)
+                            }
+                        }}
+                    >
+                        {
+                            (c._id === value || list.findIndex(l => l === c._id) !== -1)
+                            &&
+                            <div className={styles.checked} />
+                        }
+                    </div>
                 ))
             }
         </div>

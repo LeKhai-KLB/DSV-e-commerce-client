@@ -2,11 +2,11 @@ import {memo, useState, useEffect} from 'react';
 import styles from './filterPriceBox.module.css'
 import Slider from '@mui/material/Slider'
 
-function FilterPriceBox({onChange, value}) {
-    const [range, setRange] = useState(value)
+function FilterPriceBox({onChange, value=null}) {
+    const [range, setRange] = useState(value ? value: [0,100])
 
     const handleChangeCommittedRange = (e, newValue) => {
-        onChange(newValue)
+        onChange('price', newValue.join('-'))
     }
 
     const handleChangeRange = (e, newValue) => {

@@ -1,31 +1,26 @@
 import { memo, useState, useEffect } from "react";
 import styles from './filterSizeBox.module.css'
 
-function FilterSizeBox({onChange, value}) {
-    
-    const [size, setSize] = useState('s')
+function FilterSizeBox({onChange, value, style=null, required=false}) {
 
-    const handleChangeSize = (s) => {
-        if(s !== size) {
-            setSize(s)
-            onChange(s)
+    const handleClickSizeBox = (val) => {
+        if(val === value) {
+            if(!required)
+                onChange('size', '')
+        }
+        else {
+            onChange('size', val)
         }
     }
 
-    useEffect(() => {
-        if(value) {
-            setSize(value)
-        }
-    }, [])
-
     return (
-        <div className={styles.filterSizeBoxContainer}>
+        <div className={styles.filterSizeBoxContainer} style={style ? style:{}}>
             {
                 ['s', 'm', 'l'].map((s, i) => (
                     <div 
                         key={i} 
-                        className={`${styles.sizeBox} ${size === s ? styles.highlight:''}`} 
-                        onClick={() => handleChangeSize(s)}
+                        className={`${styles.sizeBox} ${value === s ? styles.highlight:''}`} 
+                        onClick={() => handleClickSizeBox(s)}
                     >
                         {s}
                     </div>

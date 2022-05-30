@@ -5,59 +5,46 @@ import styles from './filterByWordBox.module.css'
 import blankIcon from '../../../../assets/general/icon/blank-box.png'
 import checkBoxIcon from '../../../../assets/general/icon/check-box.png'
 
-function FilterByWordBox({onChange, handleLoad=null, initData=null, value}) {
-    const [list, setList] = useState([])
-    const [checkedValue, setCheckedValue] = useState()
+function FilterByWordBox({onChange, initData=null, title=null, value=null}) {
+    const [list, setList] = useState(value ? value:[])
 
-    const handleFirstMount = async () => {
-        if(handleLoad) {
-            try {
-                const newList = await handleLoad()
-                setList([...newList])
-            }
-            catch(err){
-                console.error(err.message)
-            }
+    const checked = (val) => {
+        return list.findIndex(l => l === val)
+    }
+
+    const handleChangeCheckedBox = (val) => {
+        const checkValue = checked(val)
+        if(checkValue === -1){
+            setList([...list, val])
         }
         else {
-            if(initData) {
-                setList([...initData])
-            }
-        }
-    } 
-
-    const handleChangeCheckedValue = (v) => {
-        if(v !== checkedValue){
-            setCheckedValue(v)
-            onChange(v)
+            const temp = list
+            temp.splice(checkValue, 1)
+            setList([...temp])
         }
     }
 
     useEffect(() => {
-        handleFirstMount()
-        if(value) {
-            setCheckedValue(value)
+        if(list.length === initData.length || list.length === 0) 
+            onChange(title, '')
+        else {
+            const temp = list.join('-')
+            onChange(title, temp)
         }
-    }, [])
+    }, [list])
 
     return (
+        initData &&
         <div className={styles.filterByWordBoxContainer} >
-            <div 
-                className={`${styles.filterBox} ${checkedValue === 'All' ? styles.highlight:''}`}
-                onClick={() => handleChangeCheckedValue('All')}
-            >
-                <span style={{marginLeft: '10px'}}>All</span>
-                <img src={checkedValue === 'All' ? checkBoxIcon:blankIcon} className={styles.icon} al=' ' />
-            </div>
             {
-                list.map((l, i) => (
+                initData.map((l, i) => (
                     <div 
                         key={i} 
-                        className={`${styles.filterBox} ${checkedValue === l ? styles.highlight:''}`}
-                        onClick={() => handleChangeCheckedValue(l)}
+                        className={`${styles.filterBox}`}
+                        onClick={() => handleChangeCheckedBox(l?._id ? l._id:l, i)}
                     >
-                        <span style={{marginLeft: '10px'}}>{l}</span>
-                        <img src={checkedValue === l ? checkBoxIcon:blankIcon} className={styles.icon} al=' ' />
+                        <span style={{marginLeft: '10px'}}>{l?.name ? l.name:l}</span>
+                        <img src={list.findIndex(v => v === (l?._id ? l._id:l)) !== -1 ? checkBoxIcon:blankIcon} className={styles.icon} al=' ' />
                     </div>
                 ))
             }

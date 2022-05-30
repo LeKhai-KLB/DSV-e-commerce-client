@@ -5,6 +5,8 @@ import SearchBar from '../../components/AdminComponent/SearchBar'
 import PaginationBar from '../../components/AdminComponent/PaginationBar'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { adminSelector } from '../../redux/selector'
 import { 
 getProductsByFilterAndSortValue,
 deleteProductAPI
@@ -19,22 +21,20 @@ import editIcon from '../../assets/admin/edit.png'
 import placeholder from '../../assets/general/placeholder/placeholder.png'
 
 function AdminProducts() {
-    const [sortValue, setSortValue] = useState('Date added')
+    const [sortValue, setSortValue] = useState({key: '_id', option:'desc'})
     const [searchValue, setSearchValue] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [currentMaxShow, setCurrentMaxShow] = useState(9)
     const [showActionsBox, setShowActionsBox] = useState(0)
-    const [productListSlice, setProductListSlice] = useState([])
+    const [productListSlice, setProductListSlice] = useState(null)
     const [recordCount, setRecordCount] = useState(0)
+    const admin = useSelector(adminSelector)
     const nav = useNavigate()
 
     const handleFirstLoad = async () => {
         try {
-            const {data} = await axios.post(getProductsByFilterAndSortValue, {
-                searchValue: searchValue,
-                sortValue: sortValue,
-                slice: '0-' + currentMaxShow
-            })
+            const queryString = `?searchValue=${searchValue}&sortValue=${JSON.stringify(sortValue)}&slice=0-${currentMaxShow}`
+            const {data} = await axios.get(getProductsByFilterAndSortValue + queryString)
             if(data.status === 200) {
                 setProductListSlice(data.resultData.products)
                 setRecordCount(data.resultData.remainingLength)
@@ -51,12 +51,9 @@ function AdminProducts() {
     const reLoadProductList = async () => {
         const last = currentPage * currentMaxShow
         const first = last-currentMaxShow <= 0 ? 0:last-currentMaxShow
+        const queryString = `?searchValue=${searchValue}&sortValue=${JSON.stringify(sortValue)}&slice=${first}-${last}`
         try {
-            const {data} = await axios.post(getProductsByFilterAndSortValue, {
-                searchValue: searchValue,
-                sortValue: sortValue,
-                slice: first + '-' + last
-            })
+            const {data} = await axios.get(getProductsByFilterAndSortValue + queryString)
             if(data.status === 200) {
                 setProductListSlice(data.resultData.products)
                 setRecordCount(data.resultData.remainingLength)
@@ -66,6 +63,8 @@ function AdminProducts() {
             }
         }
         catch (err) {
+            setProductListSlice(null)
+            setRecordCount(0)
             console.log(err.message)
         }
     }
@@ -73,7 +72,11 @@ function AdminProducts() {
     const handleDelete = async (id) => {
         setShowActionsBox(0)
         try {
-            const {data} = await axios.post(deleteProductAPI, {id: id})
+            const {data} = await axios.post(deleteProductAPI, {id: id}, {
+                headers: {
+                    authorization: admin.jwt
+                }
+            })
             if(data.status === 200) {
                 if(recordCount === 1) {
                     setProductListSlice([])
@@ -110,7 +113,11 @@ function AdminProducts() {
                 <div className={styles.leftContainer}>
                     <span className={styles.labelStyle} >sort by</span>
                     <div className={styles.mtl20}>
-                        <DropdownMenu list={['Date added','A - Z', 'Z - A']} onChange={setSortValue}/>
+                        <DropdownMenu list={[
+                            {title: 'Date added', key: '_id', option:'desc'}, 
+                            {title:'A - Z', key: 'name', option:'asc'}, 
+                            {title:'Z - A', key: 'name', option:'desc'},
+                        ]} onChange={setSortValue}/>
                     </div>
                 </div>
 
@@ -135,6 +142,7 @@ function AdminProducts() {
             <div className={styles.entriesContainer} >
                 <div className={styles.tableLine}/>
                 <table className={styles.table}>
+                    
                     <thead >
                         <tr className={styles.tableTitleContainer + ' '+ styles.labelStyle}>
                             <th >products</th>
@@ -143,6 +151,7 @@ function AdminProducts() {
                             <th >profit ($)</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         {
                             productListSlice &&
@@ -154,7 +163,7 @@ function AdminProducts() {
                                             <div className={styles.displayFlexEffect}>
                                                 <img src={e?.images.length !== 0 ? e?.images[0]:placeholder} alt="product" className={styles.productImageEntry} />
                                                 <div className={styles.textEntry}>
-                                                    <span title={e?.name}>{e?.name}</span>
+                                                    <span className={styles.textEntryTite} title={e?.name}>{e?.name}</span>
                                                     <span className={styles.textEntryCategory}>{e?.categories?.map(c => c.name).join(', ')}</span>
                                                 </div>
                                             </div>
@@ -164,7 +173,7 @@ function AdminProducts() {
                                             {Object.values(e.quantity).reduce((a, b) => a + b)}
                                         </td>
                                         <td style={{width: '260px'}}>{
-                                            Date(e?.createdAt).split(' ').slice(0, 4).join(', ')
+                                            (new Date(e?.createdAt)).toDateString().split(' ').slice(0, 4).join(', ')
                                         }</td>
                                         <td style={{width: '200px'}}>{e?.price}.00</td>
             

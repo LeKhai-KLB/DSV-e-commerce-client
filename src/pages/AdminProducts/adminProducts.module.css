@@ -181,7 +181,13 @@ div.textEntry {
     flex-direction: column;
     margin-left: 16px;
     white-space: nowrap;
-    overflow: hidden;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+span.textEntryTite {
+    white-space: nowrap;
+    overflow-x: hidden;
     text-overflow: ellipsis;
 }
 
@@ -194,6 +200,9 @@ span.textEntryCategory {
     line-height: 1.83;
     letter-spacing: normal;
     color: var(--greyish);
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
 
 /* actions column */

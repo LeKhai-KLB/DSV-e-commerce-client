@@ -6,6 +6,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { getImageURL } from '../../services/uploadImageService'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux'
+import { adminSelector } from '../../redux/selector'
 
 // image assets
 import closeIcon from '../../assets/general/icon/close.png'
@@ -34,7 +36,7 @@ function AdminProductInfo() {
     const [description, setDescription] = useState('')
     const currentId = useParams().id
     const [initData, setInitData] = useState({})
-
+    const admin = useSelector(adminSelector)
 
     const nav = useNavigate()
 
@@ -81,7 +83,10 @@ function AdminProductInfo() {
         try {
             const {data} = await axios.get(getCategoriesByTreeLengthAPI + '?length=3')
             if(data.status === 200) {
-                const newCategories = data.resultData.map(c => {return{name: c.name}})
+                const newCategories = data.resultData.map(c => {return{
+                    _id: c._id,
+                    name: c.name
+                }})
                 return newCategories
             }
             else {
@@ -97,9 +102,10 @@ function AdminProductInfo() {
         try {
             const {data} = await axios.get(getAllColorsAPI)
             if(data.status === 200) {
-                const newColors = data.resultData.map(c => {return {name:c.title, value:{
-                    title: c.title, value: c.value
-                }}})
+                const newColors = data.resultData.map(c => {return {
+                    _id: c._id,
+                    name: c.title
+                }})
                 return newColors
             }
             else {
@@ -115,7 +121,10 @@ function AdminProductInfo() {
         try {
             const {data} = await axios.get(getAllBrandsAPI)
             if(data.status === 200) {
-                const newBrands = data.resultData.map(c => {return {name:c.name}})
+                const newBrands = data.resultData.map(c => {return {
+                    _id: c._id,
+                    name: c.name
+                }})
                 return newBrands
             }
             else {
@@ -126,7 +135,6 @@ function AdminProductInfo() {
             return null
         }
     }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -170,19 +178,24 @@ function AdminProductInfo() {
         const uploadData = {
             name: name,
             description: description,
-            brand: typeof brand === 'string' ? brand:'',
+            brand: brand,
             categories: categories,
             price: price,
             colors: newColorsList,
             quantity: quantity,
             images: photoList ? photoList:[],
-            inStock: (initData?.instock ? initData.inStock:quantity)
+            previousQuantity: initData?.quantity ? initData.quantity:null,
+            inStock: initData?.inStock ? initData.inStock:quantity
         }
         if(action === 'update') {
             uploadData._id = currentId
         }
         try{
-            const {data} = await axios.post(api, uploadData)
+            const {data} = await axios.post(api, uploadData, {
+                headers: {
+                    authorization: admin.jwt
+                }
+            })
             if(data.status === 200) {
                 toast.dismiss(loadingId)
                 toast.success(`Successfully ${action} product`)
@@ -220,29 +233,38 @@ function AdminProductInfo() {
                     })
                 }
                 setName(data.resultData?.name)
-                const categoryNames = data.resultData.categories.map(c => c.name)
-                setInitData(prev => {
-                    const temp = {...prev}
-                    temp.categories = categoryNames
-                    return temp
+
+                const categoryData = data.resultData.categories.map(c => {
+                    return {
+                        _id: c._id,
+                        name: c.name
+                    }
                 })
-                setInitData(prev => {return {...prev, brand: data.resultData?.brand?.name}})
-                setPrice(data.resultData?.price)
-                const colorObjects = data.resultData?.colors.map(c => {return {name:c.title, value:{
-                    title: c.title, value: c.value
-                }}})
-                setInitData(prev => {return {...prev, colors: colorObjects}})
-                setInitData(prev => {
-                    const temp = []
+
+                const colorsData = data.resultData?.colors.map(c => {return {
+                    _id: c._id,
+                    name: c.title
+                }})
+
+                const sizeData = []
                     for(const [key, value] of Object.entries(data.resultData?.quantity)){
                         if(value !== 0)
-                            temp.push(key)
+                        sizeData.push({_id: key, name: key})
                     }
-                    return {...prev, sizeList: temp}
+                setInitData(prev => {
+                    const temp = {...prev}
+                    temp.categories = categoryData
+                    temp.brand = {_id: data.resultData?.brand?._id, name: data.resultData?.brand?.name}
+                    temp.colors = colorsData
+                    temp.sizeList = sizeData
+                    temp.quantity = data.resultData.quantity
+                    temp.inStock = data.resultData.inStock
+                    return temp
                 })
+                setPrice(data.resultData?.price)
                 setQuantity(data.resultData?.quantity)
                 setDescription(data.resultData?.description)
-                setColorList(colorObjects)
+                setColorList(colorsData)
             }
         }
         catch(err) {
@@ -340,7 +362,13 @@ function AdminProductInfo() {
             </div>
 
             {/* sizes */}
-            <SelectBox title="sizes" data={['s', 'm', 'l']} addMore={false} onChange={setSizeList} initData={initData.sizeList} />
+            <SelectBox 
+                title="sizes" 
+                data={[{_id: 's', name: 's'},{_id: 'm', name: 'm'},{_id: 'l', name: 'l'} ]} 
+                addMore={false} 
+                onChange={setSizeList} 
+                initData={initData.sizeList} 
+            />
 
             {/* color */}
             <SelectBox title="colors" addMore={false} onChange={setColorList} handleLoad={handleLoadColors} initData={initData.colors} />

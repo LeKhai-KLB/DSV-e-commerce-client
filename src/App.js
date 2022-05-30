@@ -29,7 +29,7 @@ function App() {
           {/* non admin routes */}
           <Route element={<NonAdminRoute />}>
             <Route index path="/" element={<Home />} exact/>
-            <Route path="products/:fstRankCategory/:seRankCategory/:thrRankCaterogy" element={<Products />} />
+            <Route path="products/:fstRankCategory/:seRankCategory" element={<Products />} />
             <Route path="product/:id" element={<Product />} />
             <Route path="cart" element={<Cart />} />
             <Route path="profile" element={<Profile />} />

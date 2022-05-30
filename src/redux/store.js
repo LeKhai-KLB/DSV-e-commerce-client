@@ -12,6 +12,7 @@ REGISTER, } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 import authReducer from './slices/authSlice'
+import cartReducer from './slices/cartSlice'
 
 const persistConfig = {
     key: 'root',
@@ -19,7 +20,8 @@ const persistConfig = {
 }
 
 const reducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    cart: cartReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

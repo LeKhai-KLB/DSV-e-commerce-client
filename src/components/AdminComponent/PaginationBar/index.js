@@ -30,15 +30,15 @@ function PaginationBar({entriesQty, onChangePage, maxShowEntries, onchangeMaxSho
 
     useEffect(() => {
         checkCurrentPage(currentPage)
-        console.log(maxPages)
         if(currentPage > maxPages) {
-            setCurrentPage(maxPages)
+            setCurrentPage(maxPages === 0 ? 1 : maxPages)
         }
     }, [currentLastShowPage, maxPages, maxShow, currentPage])
 
     useEffect(() => {
-        setMaxPages(Math.ceil(entriesQty / maxShow))
-        setCurrentLastShowPage(Math.ceil(entriesQty / maxShow) < 5 ? Math.ceil(entriesQty / maxShow):5)
+        const totalPage = Math.ceil(entriesQty / maxShow)
+        setMaxPages(totalPage)
+        setCurrentLastShowPage(totalPage < 5 ? (totalPage === 0 ? 1: totalPage):5)
     },[entriesQty])
 
     useEffect(() =>

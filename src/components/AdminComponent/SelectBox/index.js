@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 function SelectBox({title, data=null, only=false, addMore=true, onChange, handleLoad=null, initData=null}) {
     const [dataList, setdataList] = useState(data)
     const [optionList, setOptionList] = useState([])
-    const [selectedOption, setSelectedOption] = useState('')
+    const [selectedOption, setSelectedOption] = useState({})
     const [showBox, setShowBox] = useState(false)
 
     useEffect(() => {
@@ -58,24 +58,22 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
     }
 
     useEffect(() => {
-        if(selectedOption !== '')
-            onChange(selectedOption)
+        if(selectedOption !== {}) {
+            onChange(selectedOption?._id !== 'new' ? selectedOption._id:selectedOption.name)
+        }
+        else {
+            onChange('')
+        }
     }, [selectedOption])
 
     useEffect(() => {
-        if(optionList.length !== 0)
-            if(typeof optionList === 'object'){
-                if(optionList?.value){
-                    const temp = optionList.map(o => o.value)
-                    onChange(temp)
-                }
-                else{
-                    onChange(optionList)
-                }
-            }
-            else{
-                onChange(optionList)
-            }
+        if(optionList.length !== 0){
+            const temp = optionList.map(o => o._id)
+            onChange(temp)
+        }
+        else {
+            onChange([])
+        }
     }, [optionList])
 
     return (
@@ -95,17 +93,28 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
                         (
                             <input 
                                 id="noDropdown"
-                                value={selectedOption} 
+                                value={selectedOption?.name ? selectedOption.name:''}
                                 className={styles.optionTitle} 
                                 placeholder={'Enter or select ' + title}
-                                onChange={(e) => setSelectedOption(e.target.value)}
+                                onChange={(e) => {
+                                    if(e.target.value !== ''){
+                                        setSelectedOption({
+                                            _id: 'new',
+                                            name: e.target.value
+                                        })
+                                    }
+                                    else {
+                                        console.log('ooo')
+                                        setSelectedOption({})
+                                    }
+                                }}
                             />
                         ):
                         (optionList.length === 0 ?
                             <span className={styles.optionTitle}>Select {title}</span>:
                             optionList.map((e, i) => (
                                 <div key={i} className={styles.tagBox}>
-                                    {typeof e === 'object' ? Object.values(e)[0]:e}
+                                    {e.name}
                                     <img 
                                         id="noDropdown"
                                         className={styles.smallIcon} 
@@ -129,14 +138,14 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
                                     className={styles.option}
                                     onClick={() => {
                                         if(!only) {
-                                            handleSetOptionList(d?.value ? d?.value:(d?.name ? d?.name:d))
+                                            handleSetOptionList(d)
                                         }
                                         else {
-                                            setSelectedOption(d?.name ? d?.name:d)
+                                            setSelectedOption(d)
                                         }
                                     }}
                                 >
-                                    {d?.name ? d?.name:d}
+                                    {d?.name}
                                 </span>  
                             ))
                         }

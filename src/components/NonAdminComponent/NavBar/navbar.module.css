@@ -8,6 +8,10 @@
     z-index: 2
 }
 
+.highlight {
+    color: var(--pale-orange);
+}
+
 .font {
     font-family: Montserrat;
     font-size: 14px;
@@ -56,6 +60,7 @@ div.searchbar {
     padding: 5px 12px 5px 15px;
     border: solid 1px var(--greyish-two);
     display:flex;
+    position: relative;
 }
 
 img.searchIcon {
@@ -85,6 +90,64 @@ input.searchInput:focus {
 
 input.searchinput::placeholder {
     color: var(--pinkish-grey);
+}
+
+/* search products container */
+div.searchproductsContainer {
+    width: 100%;
+    max-height: 220px;
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0px;
+    z-index: 1;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 0 14px 30px 0 rgba(0, 0, 0, 0.14);
+    border: solid 0.5px var(--white-six);
+    background-color: var(--white-five);
+    overflow: scroll;
+}
+
+div.searchproductsContainer::-webkit-scrollbar {
+    display: none;
+}
+
+div.searchProductEntry {
+    width: calc(100% - 16px);
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0px;
+    border-bottom: solid 0.5px var(--white-six);
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: var(--greyish-brown);
+    cursor: pointer;
+}
+
+div.searchProductEntry:last-child {
+    border-bottom: none;
+}
+
+img.searchProductImage {
+    width: 35px;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+div.searchProductName {
+    width: calc(100% - 63px);
+    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* right container */

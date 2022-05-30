@@ -68,7 +68,7 @@ function LoginBox() {
                     toast.success('successfully login')
                     setTimeout(() => {
                         toggleShowLoginBox()
-                    }, 2000)
+                    }, 1500)
                 }
                 e.target.style.setProperty('pointer-events', 'all', 'important')
             }

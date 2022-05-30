@@ -16,7 +16,7 @@ function AdminRoute() {
         nav('../admin/login')
     }
 
-    if(adminInfo === null) {
+    if(adminInfo !== null) {
         return (
             <div className={styles.adminRouteContainer}>
                 <SideBar />

@@ -9,22 +9,27 @@ function SortBox({value, onChange, list}) {
     }
 
     const handleClickItem = (l) => {
-        document.querySelector('.' + styles.memuValue).innerText = l
+        document.querySelector('.' + styles.memuValue).innerText = JSON.parse(l).title
         onChange(l)
     }
+    
+
 
     return (
         <div className={styles.dropBox} onClick={() => handleClickMenu()} >
-            <span className={styles.memuValue}>
-                {value}
+            <span className={`${styles.memuValue}`}>
+                {value ? JSON.parse(value).title : JSON.parse(list[0]).title}
             </span>
             <img className={styles.arrowIcon} src={dropdownIcon} alt="dropdown" />
             <div className={styles.listContainer + ' ' + styles.hidden}>
-                {list && list.map((l, index) => (
-                    <div key={index} className={styles.item} onClick={() => handleClickItem(l)} >
-                        {l}
-                    </div>
-                ))}
+                {list && list.map((l, index) => {
+                    const parseValue = JSON.parse(l)
+                    return (
+                        <div key={index} className={styles.item} onClick={() => handleClickItem(l)} >
+                            {parseValue.title}
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )

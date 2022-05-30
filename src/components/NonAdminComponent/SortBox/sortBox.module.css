@@ -23,6 +23,10 @@ span.memuValue{
     left: 16px;
 }
 
+.loadingState {
+    color: var(--greyish-two) !important
+}
+
 img.arrowIcon {
     position: absolute;
     width: 24px;
@@ -57,4 +61,5 @@ div.item {
     line-height: 1.83;
     letter-spacing: normal;
     color: var(--greyish-brown);
+    text-transform: none !important;
 }

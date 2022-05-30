@@ -5,19 +5,19 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
-import NonAdminRoute from './routes/NonAdminRoute'
-import AdminRoute from './routes/AdminRoute'
+import CustommerRoute from './routes/Custommer'
+import AdminRoute from './routes/Admin'
 
-import Cart from './pages/Cart'
-import Home from './pages/Home'
-import Product from './pages/Product'
-import Products from './pages/Products'
-import Profile from './pages/Profile'
+import Cart from './pages/Custommer/Cart'
+import Home from './pages/Custommer/Home'
+import Product from './pages/Custommer/Product'
+import Products from './pages/Custommer/Products'
+import Profile from './pages/Custommer/Profile'
 
-import AdminLogin from './pages/AdminLogin'
-import AdminOrders from './pages/AdminOrders'
-import AdminProducts from './pages/AdminProducts'
-import AdminProductInfo from './pages/AdminProductInfo'
+import AdminLogin from './pages/Admin/Login'
+import AdminOrders from './pages/Admin/Orders'
+import AdminProducts from './pages/Admin/Products' 
+import AdminProductInfo from './pages/Admin/ProductInfo'
 
 function App() {
   const isLogin = useRef(false)
@@ -27,7 +27,7 @@ function App() {
         <Routes>
 
           {/* non admin routes */}
-          <Route element={<NonAdminRoute />}>
+          <Route element={<CustommerRoute />}>
             <Route index path="/" element={<Home />} exact/>
             <Route path="products/:fstRankCategory/:seRankCategory" element={<Products />} />
             <Route path="product/:id" element={<Product />} />

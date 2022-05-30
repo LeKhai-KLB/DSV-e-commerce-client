@@ -10,7 +10,7 @@ export const loginService = async (dispatch, info) => {
         const { data } = await axios.post(loginAPI, {...info})
         if(data.status === 200) {
             dispatch(successful(data.resultData))
-            return {}
+            return data.resultData
         }
         else{
             throw new Error(data.errorMessage)

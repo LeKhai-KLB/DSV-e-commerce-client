@@ -2,8 +2,8 @@ import styles from './SelectBox.module.css';
 import {memo, useState} from 'react';
 
 import dropdownIcon from '../../../assets/admin/dropdown.png'
-import addIcon from '../../../assets/general/icon/add.png'
-import closeIcon from '../../../assets/general/icon/closeCircle.png'
+import addIcon from '../../../assets/shared/icon/add.png'
+import closeIcon from '../../../assets/shared/icon/closeCircle.png'
 import { useEffect } from 'react';
 
 function SelectBox({title, data=null, only=false, addMore=true, onChange, handleLoad=null, initData=null}) {
@@ -26,21 +26,20 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
     const handleShowOptionsBox = async (e) => {
         if(e.target.id !== 'noDropdown'){
             if(!showBox) {
-                if(handleLoad) {
-                    try {
-                        const newData = await handleLoad()
-                        setdataList(newData)
-                    }
-                    catch(err) {
-                        setdataList(null)
+                if(!dataList) {
+                    if(handleLoad) {
+                        try {
+                            const newData = await handleLoad()
+                            setdataList(newData)
+                        }
+                        catch(err) {
+                            setdataList(null)
+                        }
                     }
                 }
                 setShowBox(true)
             }
             else {
-                if(handleLoad) {
-                    setdataList(null)
-                }
                 setShowBox(false)
             }
         }
@@ -58,22 +57,24 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
     }
 
     useEffect(() => {
-        if(selectedOption !== {}) {
-            onChange(selectedOption?._id !== 'new' ? selectedOption._id:selectedOption.name)
-        }
-        else {
-            onChange('')
-        }
+        if(only)
+            if(Object.keys(selectedOption).length !== 0) {
+                onChange(selectedOption?._id !== 'new' ? selectedOption._id:selectedOption.name)
+            }
+            else {
+                onChange('')
+            }
     }, [selectedOption])
 
     useEffect(() => {
-        if(optionList.length !== 0){
-            const temp = optionList.map(o => o._id)
-            onChange(temp)
-        }
-        else {
-            onChange([])
-        }
+        if(!only)
+            if(optionList.length !== 0){
+                const temp = optionList.map(o => o._id)
+                onChange(temp)
+            }
+            else {
+                onChange([])
+            }
     }, [optionList])
 
     return (
@@ -104,10 +105,10 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
                                         })
                                     }
                                     else {
-                                        console.log('ooo')
                                         setSelectedOption({})
                                     }
                                 }}
+                                autoComplete="false"
                             />
                         ):
                         (optionList.length === 0 ?

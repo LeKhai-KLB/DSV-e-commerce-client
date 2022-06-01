@@ -7,13 +7,6 @@ import axios from 'axios'
 import { adminSelector } from '../../../redux/selector'
 import { useSelector } from 'react-redux'
 
-// APIs
-import {
-    getOrdersByFilterAPI,
-    setStatusAPI
-}
-from '../../../APIs'
-
 // image assets
 import exportIcon from '../../../assets/admin/export-orange.png'
 import dropdownIcon from '../../../assets/admin/dropdown.png'
@@ -34,7 +27,7 @@ function AdminOrders() {
 
     const handleSetState = async (state, title, index, id) => {
         try {
-            const {data} = await axios.post(setStatusAPI, {id: id, state: state, title: title},
+            const {data} = await axios.post(process.env.REACT_APP_SET_STATUS_ORDER_API, {id: id, state: state, title: title},
             {
                 headers: {
                     authorization: admin.jwt
@@ -98,7 +91,7 @@ function AdminOrders() {
                 queryString += `searchValue=${searchValue}&`
             queryString += `page=${currentPage === 0 ? 1:currentPage}&`
             queryString += `limit=${currentMaxShow}`
-            const { data } = await axios.get(getOrdersByFilterAPI + queryString, {
+            const { data } = await axios.get(process.env.REACT_APP_GET_ORDER_BY_FILTER_API + queryString, {
                 headers: {
                     authorization: admin.jwt
                 }

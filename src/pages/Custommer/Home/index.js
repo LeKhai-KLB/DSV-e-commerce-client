@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import styles from './home.module.css'
 
 // image assets
-import mainThumb from '../../../assets/nonAdmin/main-thumb.jpg'
-import menThumb from '../../../assets/nonAdmin/men-thumb.jpg'
-import ladiesThumb from '../../../assets/nonAdmin/ladies-thumb.jpg'
-import girlsThumb from '../../../assets/nonAdmin/girls-thumb.jpg'
-import boysThumb from '../../../assets/nonAdmin/boys-thumb.jpg'
+import mainThumb from '../../../assets/custommer/main-thumb.jpg'
+import menThumb from '../../../assets/custommer/men-thumb.jpg'
+import ladiesThumb from '../../../assets/custommer/ladies-thumb.jpg'
+import girlsThumb from '../../../assets/custommer/girls-thumb.jpg'
+import boysThumb from '../../../assets/custommer/boys-thumb.jpg'
 
 function Home() {
     const nav = useNavigate()

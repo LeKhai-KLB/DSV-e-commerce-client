@@ -4,28 +4,23 @@ import { memo, useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutService } from '../../../services/authServices'
 import { requiredAuthContext } from '../../../routes/Custommer'
+import CartNotifyBox from '../CartNotifyBox'
 import axios from 'axios'
-import { getProductsByFilterAndSortValue, getCategoriesPassByParentAPI } from '../../../APIs'
 
 // image assets
-import logo from '../../../assets/nonAdmin/logo.png'
-import logo_2x from '../../../assets/nonAdmin/logo@2x.png'
-import logo_3x from '../../../assets/nonAdmin/logo@3x.png'
-import placeholder from '../../../assets/general/placeholder/placeholder.png'
-import searchIcon from '../../../assets/general/icon/search.png'
-import cartIcon from '../../../assets/general/icon/cart.png'
-import arrowIcon from '../../../assets/general/icon/arrow.png'
+import logo from '../../../assets/custommer/logo.png'
+import logo_2x from '../../../assets/custommer/logo@2x.png'
+import logo_3x from '../../../assets/custommer/logo@3x.png'
+import placeholder from '../../../assets/shared/placeholder/placeholder.png'
+import searchIcon from '../../../assets/shared/icon/search.png'
+import arrowIcon from '../../../assets/shared/icon/arrow.png'
 
 // selector
 import { userSelector, cartQuantitySelector } from '../../../redux/selector'
 
-// API
-import { getCategoriesByTreeLengthAPI } from '../../../APIs'
-
 function NavBar(){
     const nav = useNavigate()
     const user = useSelector(userSelector)
-    const cartQuantity = useSelector(cartQuantitySelector)
     const [categoriesStore, setCategoiesStore] = useState([])
     const [rootCategories, setRootCategories] = useState([])
     const [parent, setParent] = useState('')
@@ -59,10 +54,11 @@ function NavBar(){
 
     const handleFetchCategoryData = async () => {
         try{
-            const { data } = await axios.get(getCategoriesByTreeLengthAPI + '?length=1')
+            const { data } = await axios.get(process.env.REACT_APP_GET_CATEGORY_BY_TREE_LENGTH_API + '?length=1')
             if(data.status === 200) {
                 setRootCategories(data.resultData)
-                Promise.all(data.resultData.map(c => axios.get(getCategoriesPassByParentAPI + '?parent=' + c._id)))
+                Promise.all(data.resultData.map(c => 
+                    axios.get(process.env.REACT_APP_GET_CATEGORY_PASS_BY_PARENT_VALUE_API + '?parent=' + c._id)))
                     .then((values) => {
                         const newChildCategories = values.map(c => c.data.resultData).flat()
                         setCategoiesStore(newChildCategories)
@@ -96,7 +92,7 @@ function NavBar(){
                 const queryString = Object.keys(queryObject).map(key => 
                     `${key}=${queryObject[key]}`
                 ).join('&')
-                const {data} = await axios.get(getProductsByFilterAndSortValue + '?' + queryString)
+                const {data} = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_FILTER_AND_SORT_VALUE_API + '?' + queryString)
                 if(data.status === 200) {
                     setSearchProducts(data.resultData.products)
                 }
@@ -182,15 +178,16 @@ function NavBar(){
                 <div className={styles.rightContainer}>
                     {user ? <LoggedInBox user={user} />: <UnloggedInBox />}
                     
-                    <div className={styles.cartButton + ' ' + styles.activeStyle} onClick={() => {
+                    <div className={styles.cartButton} onClick={() => {
                             setParent('')
                             setChildCategories([])
                             nav('./cart')
                     }} >
-                        <img src={cartIcon} className={styles.cartIcon} alt="cart" />
-                        <div className={styles.cartNotification + ' ' + styles.font} >{cartQuantity}</div> 
+                        <CartNotifyBox />
                     </div>
+
                 </div>
+
             </div>
 
             {/* Category container */}
@@ -246,10 +243,8 @@ function UnloggedInBox() {
 // LoggedInBox component
 function LoggedInBox({user}) {
     const dispatch = useDispatch()
-
-    const handleShowBox = e => {
-        e.target?.nextSibling?.classList.toggle(styles.hidden)
-    }
+    const nav = useNavigate()
+    const [showSettingBox, setShowSettingBox] = useState(false)
 
     const handleLogout = () => {
         logoutService(dispatch)
@@ -260,18 +255,33 @@ function LoggedInBox({user}) {
             <img 
                 src={user?.avatar ? user?.avatar:placeholder} className={styles.avatar + ' ' + styles.activeStyle} 
                 alt="avatar"  
-                onClick={e => handleShowBox(e)}
+                onClick={() => setShowSettingBox(!showSettingBox)}
             />
 
-            <div className={styles.settingBox + ' ' + styles.font + ' ' + styles.hidden}>
-                <div className={styles.settingButton + ' ' + styles.activeStyle} >
-                    Account settings
+            {
+                showSettingBox &&
+                <div className={styles.settingBox + ' ' + styles.font}>
+                    <div 
+                        className={styles.settingButton + ' ' + styles.activeStyle} 
+                        onClick={() => {
+                            nav('./profile')
+                            setShowSettingBox(false)
+                        }}
+                    >
+                        Account settings
+                    </div>
+                    <div className={styles.line} />
+                    <div 
+                        onClick = {() => {
+                            handleLogout()
+                            setShowSettingBox(false)
+                        }} 
+                        className={styles.settingButton + ' ' + styles.activeStyle} 
+                    >
+                        Logout
+                    </div>
                 </div>
-                <div className={styles.line} />
-                <div onClick = {handleLogout} className={styles.settingButton + ' ' + styles.activeStyle} >
-                    Logout
-                </div>
-            </div>
+            }
         </div>
     )
 }

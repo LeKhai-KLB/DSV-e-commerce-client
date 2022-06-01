@@ -2,9 +2,9 @@ import styles from './Footer.module.css'
 import { memo } from 'react'
 
 // image assets
-import logo from '../../../assets/nonAdmin/logo.png'
-import logo_2x from '../../../assets/nonAdmin/logo@2x.png'
-import logo_3x from '../../../assets/nonAdmin/logo@3x.png'
+import logo from '../../../assets/custommer/logo.png'
+import logo_2x from '../../../assets/custommer/logo@2x.png'
+import logo_3x from '../../../assets/custommer/logo@3x.png'
 
 function Footer() {
     return (

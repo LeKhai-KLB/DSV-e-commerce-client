@@ -6,8 +6,8 @@ import { requiredAuthContext } from '../../../routes/Custommer'
 import { loginService } from '../../../services/authServices'
 import { useDispatch } from 'react-redux'
 
-import crossIcon from '../../../assets/general/icon/cross.png'
-import checkBoxIcon from '../../../assets/general/icon/check-box.png'
+import crossIcon from '../../../assets/shared/icon/cross.png'
+import checkBoxIcon from '../../../assets/shared/icon/check-box.png'
 
 function LoginBox() {
     const {toggleShowLoginBox, toggleShowRegisterBox, toggleShowForgotPasswordBox} = useContext(requiredAuthContext)

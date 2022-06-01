@@ -9,17 +9,11 @@ import FilterByWordBox from '../../../components/Custommer/FilterBox/FilterByWor
 import FilterPriceBox from '../../../components/Custommer/FilterBox/FilterPriceBox'
 import SortBox from '../../../components/Custommer/SortBox'
 import Pagination from '@mui/material/Pagination';
-import { 
-getAllBrandsAPI, 
-getCategoriesPassByParentAPI, 
-getAllBrandPassByCategoryAPI, 
-getProductsByFilterAndSortValue,
-getAllColorsAPI
-} from '../../../APIs'
+
 import axios from 'axios'
 
 // image assets
-import dumpImage  from '../../../assets/general/dump/dump1.png'
+import dumpImage  from '../../../assets/shared/dump/dump1.png'
 
 function Products() {
     const params = useParams()
@@ -43,7 +37,7 @@ function Products() {
             if(!queryObject?.category)
                 queryString += '&category=' + params.seRankCategory.split('_')[1]
             
-            const { data } = await axios.get(getProductsByFilterAndSortValue + '?' + queryString)
+            const { data } = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_FILTER_AND_SORT_VALUE_API + '?' + queryString)
             if(data.status === 200) {
                 setProductList(data.resultData.products)
                 setTotalLength(data.resultData.remainingLength)
@@ -65,7 +59,7 @@ function Products() {
     const handleLoadBrandList = async () => {
         try {
             const categoryId = queries.get('category') ? queries.get('category'):params.seRankCategory.split('_')[1]
-            const brandData = await axios.get(getAllBrandPassByCategoryAPI + '?category=' + categoryId)
+            const brandData = await axios.get(process.env.REACT_APP_GET_ALL_BRANDS_PASS_CATEGORY_API + '?category=' + categoryId)
             if(brandData.data.status === 200) {
                 setBrandList(brandData.data.resultData)
             }
@@ -76,17 +70,17 @@ function Products() {
     const handleFirstLoad = async () => {
         try {
             const parentId = params.seRankCategory.split('_')[1]
-            const categoryData = await axios.get(getCategoriesPassByParentAPI + '?parent=' + parentId)
+            const categoryData = await axios.get(process.env.REACT_APP_GET_CATEGORY_PASS_BY_PARENT_VALUE_API + '?parent=' + parentId)
             if(categoryData.data.status === 200) {
                 setCategoryList([{name: 'All ' + params.seRankCategory.split('_')[0], _id:parentId}, ...categoryData.data.resultData])
                 
             }
-            const colorData = await axios.get(getAllColorsAPI)
+            const colorData = await axios.get(process.env.REACT_APP_GET_ALL_COLORS_API)
             if(colorData.data.status === 200) {
                 setColorList(colorData.data.resultData)
             }
             const categoryId = queries.get('category') ? queries.get('category'):params.seRankCategory.split('_')[1]
-            const brandData = await axios.get(getAllBrandPassByCategoryAPI + '?category=' + categoryId)
+            const brandData = await axios.get(process.env.REACT_APP_GET_ALL_BRANDS_PASS_CATEGORY_API + '?category=' + categoryId)
             if(brandData.data.status === 200) {
                 setBrandList(brandData.data.resultData)
             }

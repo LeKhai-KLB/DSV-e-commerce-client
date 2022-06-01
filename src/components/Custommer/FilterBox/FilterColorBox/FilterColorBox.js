@@ -1,7 +1,5 @@
 import { memo, useState, useEffect } from "react";
 import styles from './FilterColorBox.module.css'
-import { getAllColorsAPI } from '../../../../APIs'
-import axios from 'axios'
 
 function FilterColorBox({onChange, value, initData=null, style=null, required=false, multiChoice=false}) {
 

@@ -9,8 +9,12 @@ form.productInfoContainer {
 
 
 /* general styles defined */
-.hidden {
-    display: none !important;
+.rise {
+    z-index: 1 !important;
+}
+
+.sink {
+    z-index: 0 !important;
 }
 
 img.largeIcon {
@@ -81,8 +85,15 @@ div.imageButton {
     align-items: center;
     justify-content: center;    
     background-color: #FAFAFA;
-    cursor: pointer;
     z-index: 1;
+}
+
+div.clickEffectSide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
 }
 
 span.imageButtonTitle {

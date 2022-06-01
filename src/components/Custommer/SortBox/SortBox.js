@@ -1,7 +1,7 @@
 import {memo, useState} from 'react'
 import styles from './SortBox.module.css'
 
-import dropdownIcon from '../../../assets/general/icon/arrow.png'
+import dropdownIcon from '../../../assets/shared/icon/arrow.png'
 
 function SortBox({value, onChange, list}) {  
     const [showMenu, setShowMenu] = useState(false)

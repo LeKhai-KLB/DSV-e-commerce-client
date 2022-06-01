@@ -3,7 +3,7 @@ import styles from './ForgotPasswordBox.module.css'
 import { requiredAuthContext } from '../../../routes/Custommer'
 
 // image assets
-import crossIcon from '../../../assets/general/icon/cross.png'
+import crossIcon from '../../../assets/shared/icon/cross.png'
 
 function ForgotPasswordBox() {
     const [emailFieldValue, setEmailFieldValue] = useState('')

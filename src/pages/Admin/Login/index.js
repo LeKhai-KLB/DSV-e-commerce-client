@@ -39,7 +39,7 @@ function AdminLogin() {
                 if(res.isAdmin) {
                     toast.success('Successfully login')
                     setTimeout(() => {
-                        nav(-1, {replace: true})   
+                        nav('../admin/')   
                     }, 2000)
                 }
                 else {

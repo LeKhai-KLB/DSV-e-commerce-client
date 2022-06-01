@@ -1,9 +1,10 @@
 .contentContainer {
+    margin-top: 115px;
     width: calc(100% - 258px);
     min-height: 711px;
 }
 
-.nonAdminContainer {
+.custommerRouteContainer {
     position: relative;
     display: flex;
     flex-direction: column;

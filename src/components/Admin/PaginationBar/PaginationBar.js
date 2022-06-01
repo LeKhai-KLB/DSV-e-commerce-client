@@ -3,11 +3,11 @@ import { memo, useRef } from 'react'
 import { useEffect, useState } from 'react'
 
 // image assets
-import lastPageIcon from '../../../assets/general/icon/last-page.png'
-import firstPageIcon from '../../../assets/general/icon/first-page.png'
-import nextIcon from '../../../assets/general/icon/next.png'
-import prevIcon from '../../../assets/general/icon/prev.png'
-import arrowIcon from '../../../assets/general/icon/arrow.png'
+import lastPageIcon from '../../../assets/shared/icon/last-page.png'
+import firstPageIcon from '../../../assets/shared/icon/first-page.png'
+import nextIcon from '../../../assets/shared/icon/next.png'
+import prevIcon from '../../../assets/shared/icon/prev.png'
+import arrowIcon from '../../../assets/shared/icon/arrow.png'
 
 function PaginationBar({entriesQty, onChangePage, maxShowEntries, onchangeMaxShow}) {
 

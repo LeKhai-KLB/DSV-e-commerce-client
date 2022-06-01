@@ -2,7 +2,7 @@ import { memo, useState } from 'react'
 import styles from './SearchBar.module.css'
 
 // image assets
-import searchIcon from '../../../assets/general/icon/search.png'
+import searchIcon from '../../../assets/shared/icon/search.png'
 
 function SearchBar({onChangeValue}) {
     const [searchValue, setSearchValue] = useState('')

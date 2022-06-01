@@ -7,10 +7,6 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { adminSelector } from '../../../redux/selector'
-import { 
-getProductsByFilterAndSortValue,
-deleteProductAPI
-} from '../../../APIs'
 
 // image assets 
 import addIcon from '../../../assets/admin/plus-white.png'
@@ -18,7 +14,7 @@ import exportIcon from '../../../assets/admin/export-orange.png'
 import dropdownIcon from '../../../assets/admin/dropdown.png'
 import removeIcon from '../../../assets/admin/remove.png'
 import editIcon from '../../../assets/admin/edit.png'
-import placeholder from '../../../assets/general/placeholder/placeholder.png'
+import placeholder from '../../../assets/shared/placeholder/placeholder.png'
 
 function AdminProducts() {
     const [sortValue, setSortValue] = useState({key: '_id', option:'desc'})
@@ -34,7 +30,7 @@ function AdminProducts() {
     const handleFirstLoad = async () => {
         try {
             const queryString = `?searchValue=${searchValue}&sortValue=${JSON.stringify(sortValue)}&slice=0-${currentMaxShow}`
-            const {data} = await axios.get(getProductsByFilterAndSortValue + queryString)
+            const {data} = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_FILTER_AND_SORT_VALUE_API + queryString)
             if(data.status === 200) {
                 setProductListSlice(data.resultData.products)
                 setRecordCount(data.resultData.remainingLength)
@@ -53,7 +49,7 @@ function AdminProducts() {
         const first = last-currentMaxShow <= 0 ? 0:last-currentMaxShow
         const queryString = `?searchValue=${searchValue}&sortValue=${JSON.stringify(sortValue)}&slice=${first}-${last}`
         try {
-            const {data} = await axios.get(getProductsByFilterAndSortValue + queryString)
+            const {data} = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_FILTER_AND_SORT_VALUE_API + queryString)
             if(data.status === 200) {
                 setProductListSlice(data.resultData.products)
                 setRecordCount(data.resultData.remainingLength)
@@ -72,7 +68,7 @@ function AdminProducts() {
     const handleDelete = async (id) => {
         setShowActionsBox(0)
         try {
-            const {data} = await axios.post(deleteProductAPI, {id: id}, {
+            const {data} = await axios.post(process.env.REACT_APP_DELETE_PRODUCT_API, {id: id}, {
                 headers: {
                     authorization: admin.jwt
                 }

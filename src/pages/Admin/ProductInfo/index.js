@@ -10,22 +10,12 @@ import { useSelector } from 'react-redux'
 import { adminSelector } from '../../../redux/selector'
 
 // image assets
-import closeIcon from '../../../assets/general/icon/close.png'
-import addIcon from '../../../assets/general/icon/add.png'
-
-// APIs
-import {
-    getCategoriesByTreeLengthAPI,
-    getAllBrandsAPI,
-    getAllColorsAPI,
-    addProductAPI,
-    updateProductAPI,
-    getProductByIdAPI
-}
-from '../../../APIs'
+import closeIcon from '../../../assets/shared/icon/close.png'
+import addIcon from '../../../assets/shared/icon/add.png'
 
 function AdminProductInfo() {
     const [photos, setPhotos] = useState([null, null, null, null])
+    const [photoFiles, setPhotoFiles] = useState([null, null, null, null])
     const [name, setName] = useState('')
     const [categories, setCategories] = useState([])
     const [brand, setBrand] = useState('')
@@ -36,8 +26,9 @@ function AdminProductInfo() {
     const [description, setDescription] = useState('')
     const currentId = useParams().id
     const [initData, setInitData] = useState({})
+    const [showValidate, setShowValidate] = useState(false)
     const admin = useSelector(adminSelector)
-
+    
     const nav = useNavigate()
 
     const input = useRef()
@@ -50,12 +41,12 @@ function AdminProductInfo() {
     const handleChangeImageInput = (e) => {
         if(e.target.files[0]){
             const previewImage = URL.createObjectURL(e.target.files[0]) 
-            const imagePlaceholder = document.getElementById('image ' + input.current.index).children[0]
-            const imageAddButton = document.getElementById('imageButton ' + input.current.index)
-            imagePlaceholder.src = previewImage
-            imageAddButton.style.zIndex = 0
-            imagePlaceholder.style.zIndex = 1
             setPhotos(prev => {
+                const temp = [...prev]
+                temp[input.current.index] = previewImage
+                return temp
+            })
+            setPhotoFiles(prev => {
                 const temp = [...prev]
                 temp[input.current.index] = e.target.files[0]
                 return temp
@@ -65,13 +56,11 @@ function AdminProductInfo() {
 
     const handleCrashImage = (i) => {
         input.current.value = ''
-        const imagePlaceholder = document.getElementById('image ' + i).children[0]
-        const imageAddButton = document.getElementById('imageButton ' + i)
-        const url = imagePlaceholder.src
-        imagePlaceholder.src = ''
-        URL.revokeObjectURL(url)
-        imageAddButton.style.zIndex = 1
-        imagePlaceholder.style.zIndex = 0
+        setPhotoFiles(prev => {
+            const temp = [...prev]
+            temp[i] = null
+            return temp
+        })
         setPhotos(prev => {
             const temp = [...prev]
             temp[i] = null
@@ -81,7 +70,7 @@ function AdminProductInfo() {
 
     const handleLoadCategories = async () => {
         try {
-            const {data} = await axios.get(getCategoriesByTreeLengthAPI + '?length=3')
+            const {data} = await axios.get(process.env.REACT_APP_GET_CATEGORY_BY_TREE_LENGTH_API + '?length=3')
             if(data.status === 200) {
                 const newCategories = data.resultData.map(c => {return{
                     _id: c._id,
@@ -100,7 +89,7 @@ function AdminProductInfo() {
 
     const handleLoadColors = async () => {
         try {
-            const {data} = await axios.get(getAllColorsAPI)
+            const {data} = await axios.get(process.env.REACT_APP_GET_ALL_COLORS_API)
             if(data.status === 200) {
                 const newColors = data.resultData.map(c => {return {
                     _id: c._id,
@@ -117,9 +106,10 @@ function AdminProductInfo() {
         }
     }
 
+
     const handleLoadBrands = async () => {
         try {
-            const {data} = await axios.get(getAllBrandsAPI)
+            const {data} = await axios.get(process.env.REACT_APP_GET_ALL_BRANDS_API)
             if(data.status === 200) {
                 const newBrands = data.resultData.map(c => {return {
                     _id: c._id,
@@ -139,33 +129,41 @@ function AdminProductInfo() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if(name === '' || categories.length === 0 || price === 0 || colorList.length === 0) {
-            document.querySelector('.' + styles.validateMessage)?.classList?.remove(styles.hidden)
+            setShowValidate(true)
         }
         else {
             const loadingId = toast.loading('Loading...')
-            document.querySelector('.' + styles.validateMessage)?.classList?.add(styles.hidden)
-            const newPhotoList = photos.filter(f => f !== null)
+            setShowValidate(false)
+            const newPhotoList = []
+            photos.forEach((f, i) => {
+                if(f !== null){
+                    if(!f.includes(process.env.REACT_APP_DOMAIN_HEADER))
+                        newPhotoList.push(photoFiles[i])
+                    else
+                        newPhotoList.push(f)
+                }
+            })
 
             if(newPhotoList.length !== 0) {
                 Promise.all(newPhotoList.map(f => getImageURL(f)))
                     .then((values) => {
                         if(Object.keys(initData).length === 0)
-                            handleUploadProductInfo(values, loadingId, null, addProductAPI, 'add')
+                            handleUploadProductInfo(values, loadingId, null, process.env.REACT_APP_ADD_PRODUCT_API, 'add')
                         else 
-                            handleUploadProductInfo(values, loadingId, null, updateProductAPI, 'update')
+                            handleUploadProductInfo(values, loadingId, null, process.env.REACT_APP_UPDATE_PRODUCT_API, 'update')
                     })
                     .catch((error) => {
                         if(Object.keys(initData).length === 0)
-                            handleUploadProductInfo(null, loadingId, error.message, addProductAPI, 'add')
+                            handleUploadProductInfo(null, loadingId, error.message, process.env.REACT_APP_ADD_PRODUCT_API, 'add')
                         else
-                            handleUploadProductInfo(null, loadingId, error.message, updateProductAPI, 'update')
+                            handleUploadProductInfo(null, loadingId, error.message, process.env.REACT_APP_UPDATE_PRODUCT_API, 'update')
                     })
             }
             else {
                 if(Object.keys(initData).length === 0)
-                    handleUploadProductInfo(null, loadingId, null, addProductAPI, 'add')
+                    handleUploadProductInfo(null, loadingId, null, process.env.REACT_APP_ADD_PRODUCT_API, 'add')
                 else
-                    handleUploadProductInfo(null, loadingId, null,updateProductAPI, 'update')
+                    handleUploadProductInfo(null, loadingId, null,process.env.REACT_APP_UPDATE_PRODUCT_API, 'update')
             }
         }
     }
@@ -178,7 +176,7 @@ function AdminProductInfo() {
         const uploadData = {
             name: name,
             description: description,
-            brand: brand,
+            brand:  brand === '' ? null:brand,
             categories: categories,
             price: price,
             colors: newColorsList,
@@ -189,6 +187,7 @@ function AdminProductInfo() {
         }
         if(action === 'update') {
             uploadData._id = currentId
+            uploadData.previousImages = initData?.images ? initData.images:null
         }
         try{
             const {data} = await axios.post(api, uploadData, {
@@ -211,11 +210,6 @@ function AdminProductInfo() {
     }
 
     const handleSetupImage = (imageURL, index) => {
-        const imagePlaceholder = document.getElementById('image ' + index).children[0]
-        const imageAddButton = document.getElementById('imageButton ' + index)
-        imagePlaceholder.src = imageURL
-        imageAddButton.style.zIndex = 0
-        imagePlaceholder.style.zIndex = 1
         setPhotos(prev => {
             const temp = [...prev]
             temp[index] = imageURL
@@ -225,7 +219,7 @@ function AdminProductInfo() {
 
     const handleFirstLoad = async () => {
         try {
-            const {data} = await axios.get(getProductByIdAPI + '?id=' + currentId)
+            const {data} = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_ID_API + '?id=' + currentId)
             if(data.status === 200) {
                 if(data.resultData?.images?.length !== 0) {
                     data.resultData?.images?.forEach((url, i) => {
@@ -259,6 +253,7 @@ function AdminProductInfo() {
                     temp.sizeList = sizeData
                     temp.quantity = data.resultData.quantity
                     temp.inStock = data.resultData.inStock
+                    temp.images = data.resultData.images
                     return temp
                 })
                 setPrice(data.resultData?.price)
@@ -294,12 +289,20 @@ function AdminProductInfo() {
                     [...Array(4)].map((e, i) => (
                         <div key={i} className={styles.imageContainer} >
                             <input id={'input ' + i} ref={input} style={{display: 'none'}} type="file" onChange={e => handleChangeImageInput(e)} />
-                            <div id={'imageButton ' + i} className={styles.imageButton} onClick={() => handleClickAddImage(i)}>
-                                <img src={addIcon} className={styles.largeIcon} alt=' ' />
-                                <span className={styles.imageButtonTitle}>Add photo</span>
+                            <div 
+                                id={'imageButton ' + i} 
+                                className={`${styles.imageButton} ${photos[i] ? styles.sink:styles.rise}`} 
+                            >
+                                <div className={styles.clickEffectSide} onClick={() => handleClickAddImage(i)}>
+                                    <img src={addIcon} className={styles.largeIcon} alt=' ' />
+                                    <span className={styles.imageButtonTitle}>Add photo</span>
+                                </div>
                             </div>
-                            <div id={'image ' + i} className={styles.imageZIndex} >
-                                <img className={styles.imagePlaceholder} alt=' ' />
+                            <div 
+                                id={'image ' + i} 
+                                className={`${styles.imageZIndex} ${photos[i] ? styles.rise:styles.sink}`} 
+                            >
+                                <img className={styles.imagePlaceholder} alt=' ' src={photos[i]} />
                                 <img 
                                     src={closeIcon} 
                                     className={styles.largeIcon + ' ' + styles.crashImageButton} 
@@ -420,9 +423,12 @@ function AdminProductInfo() {
                 </button>
 
                 {/* validator */}
-                <span className={styles.validateMessage + ' ' + styles.hidden}>
-                    Name, categoies, price, colors field must be filled
-                </span>
+                {
+                    showValidate &&
+                    <span className={styles.validateMessage}>
+                        Name, categoies, price, colors field must be filled
+                    </span>
+                }
                 
             </div>
             

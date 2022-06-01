@@ -11,17 +11,9 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 //image assets
-import startIcon from '../../../assets/general/icon/star.png'
-import minusIcon from '../../../assets/general/icon/minus.png'
-import plusIcon from '../../../assets/general/icon/plus.png'
-
-// APIs
-import {
-    getProductByIdAPI,
-    getProductsByBrandIdAPI,
-    getProductsByNestedRootCategoryAPI,
-    getCategoryPathByIdListAPI
-} from '../../../APIs'
+import startIcon from '../../../assets/shared/icon/star.png'
+import minusIcon from '../../../assets/shared/icon/minus.png'
+import plusIcon from '../../../assets/shared/icon/plus.png'
 
 function Product() {
     const [size, setSize] = useState('s')
@@ -49,7 +41,7 @@ function Product() {
 
     const handleLoadSameBrandProducts = async (id, nId) => {
         try {
-            const {data} = await axios.get(getProductsByBrandIdAPI 
+            const {data} = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_BRAND_ID_API 
                 + '?id=' + id + '&&limit=4&&nId=' + nId
             )
             if(data.status === 200) {
@@ -67,7 +59,7 @@ function Product() {
     const handleLoadSameParentCategory = async (parent, nId) => {
         try {
             console.log(parent)
-            const {data} = await axios.get(getProductsByNestedRootCategoryAPI
+            const {data} = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_NESTED_ROOT_CATEGORY_API
                 + '?parent=' + parent + '&&limit=8&&nId=' + nId
             )
             if(data.status === 200) {
@@ -84,7 +76,7 @@ function Product() {
 
     const handleFirstLoad = async () => {
         try {
-            const {data} = await axios.get(getProductByIdAPI + '?id=' + params.id)
+            const {data} = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_ID_API + '?id=' + params.id)
             if(data.status === 200) {
                 setProduct(data.resultData)
                 setColorPallete(data.resultData.colors)
@@ -100,7 +92,7 @@ function Product() {
                 throw new Error(data.errorMessage)
             }
             const newCategoryList = data.resultData.categories[0].tree.slice(1, 3).join('-')
-            const res = await axios.get(getCategoryPathByIdListAPI + '?list=' + newCategoryList)
+            const res = await axios.get(process.env.REACT_APP_GET_CATEGORY_PASS_BY_ID_LIST_API + '?list=' + newCategoryList)
             if(res.data.status === 200) {
                 setCategoryPath(res.data.resultData)
             }

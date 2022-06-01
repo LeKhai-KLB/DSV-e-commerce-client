@@ -2,8 +2,8 @@ import { memo, useState, useEffect } from 'react'
 import styles from './FilterByWordBox.module.css'
 
 // image assets
-import blankIcon from '../../../../assets/general/icon/blank-box.png'
-import checkBoxIcon from '../../../../assets/general/icon/check-box.png'
+import blankIcon from '../../../../assets/shared/icon/blank-box.png'
+import checkBoxIcon from '../../../../assets/shared/icon/check-box.png'
 
 function FilterByWordBox({onChange, initData=null, title=null, value=null}) {
     const [list, setList] = useState(value ? value:[])

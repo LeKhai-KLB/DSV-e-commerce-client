@@ -2,7 +2,7 @@ import {memo, useState, useEffect} from 'react'
 import styles from './FilterDropdownBar.module.css'
 
 // image assets
-import dropdownIcon from '../../../../assets/general/icon/arrow.png'
+import dropdownIcon from '../../../../assets/shared/icon/arrow.png'
 
 function FilterDropdownBar({title, children, dependency=null}) {
     

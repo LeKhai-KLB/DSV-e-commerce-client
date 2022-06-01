@@ -8,13 +8,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import styles from './cart.module.css'
 import 'react-toastify/dist/ReactToastify.css'
 
-// API
-import { addOrderAPI } from "../../../APIs"
-
 // image asset
-import placeholderImage from '../../../assets/general/placeholder/placeholder.png'
-import minusIcon from '../../../assets/general/icon/minus.png'
-import plusIcon from '../../../assets/general/icon/plus.png'
+import placeholderImage from '../../../assets/shared/placeholder/placeholder.png'
+import minusIcon from '../../../assets/shared/icon/minus.png'
+import plusIcon from '../../../assets/shared/icon/plus.png'
 
 function Cart() {
     const cartInfo = useSelector(cartInFoSelector)
@@ -40,7 +37,7 @@ function Cart() {
                             amount: c.amount
                         }
                     })
-                    const { data } = await axios.post(addOrderAPI, {
+                    const { data } = await axios.post(process.env.REACT_APP_ADD_ORDER_API, {
                         custommer: user.id,
                         cart: [...cart]
                     }, {

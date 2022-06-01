@@ -7,7 +7,7 @@ import { registerService } from '../../../services/authServices'
 import { requiredAuthContext } from '../../../routes/Custommer'
 
 // image assets
-import crossIcon from '../../../assets/general/icon/cross.png'
+import crossIcon from '../../../assets/shared/icon/cross.png'
 
 function RegisterBox() {
     const [nameFieldValue, setNameFieldValue] = useState('')

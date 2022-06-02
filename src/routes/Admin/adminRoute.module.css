@@ -13,4 +13,141 @@ div.pageContainer {
 
 div.HeaderContainer {
     flex: 0 0 104px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+/* left container */
+div.leftContainer {
+    height: 100%;
+    font-family: Montserrat;
+    display: flex;
+    flex-direction: column;
+}
+
+span.pageTitle {
+    font-size: 28px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.29;
+    letter-spacing: normal;
+    color: var(--dark-grey);
+    margin-top: 32px;
+}
+
+span.pathTitle {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: var(--charcoal-grey);
+}
+
+/* right container */
+div.rightContainer {
+    display: flex;
+    float: right;
+    align-items: center;
+}
+
+div.iconPadding {
+    position: relative;
+    margin-left: 32px;
+    cursor: pointer;
+}
+div.iconPadding:last-child {
+    margin-right: 10px
+}
+
+div.notifyBox {
+    position: absolute;
+    width: 20px;
+    height: 16px;
+    border-radius: 8px;
+    background-color: var(--strawberry);
+    font-size: 10px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.07;
+    letter-spacing: normal;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -8px;
+    left: 14px
+}
+
+img.smallIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* setting box */
+div.settingContainer {
+    display: flex;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: var(--dark-grey);
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+div.settingBox {
+    position: absolute;
+    width: 153px;
+    padding: 12px 0px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.08);
+    background-color: var(--white);
+    cursor: pointer;
+    z-index: 1;
+    top: calc(100% + 5px);
+    left: 60px;
+}
+
+img.logoutIcon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    object-position: center;
+    margin-left: 19px;
+}
+
+span.logoutTitle {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: var(--charcoal-grey);
+    margin-left: 12px;
+}
+
+img.avatar {
+    border-radius: 50%;
+    box-shadow: 0 5px 20px 0 rgba(61, 61, 63, 0.2);
+    border: solid 2px var(--white);
+    object-fit: contain;
+    object-position: center;
+    width: 38px;
+    height: 38px;
+    margin-right: 16px;
+}
+

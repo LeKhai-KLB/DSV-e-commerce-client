@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCLGMyTfa-CvDfQipxZz5uGsQQIQ6UmEZg",
-    authDomain: "image-store-for-ecommerce-app.firebaseapp.com",
-    projectId: "image-store-for-ecommerce-app",
-    storageBucket: "image-store-for-ecommerce-app.appspot.com",
-    messagingSenderId: "1058528197798",
-    appId: "1:1058528197798:web:c922cc1ce5019e52eec867",
-    measurementId: "G-QTTZHGF75J"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSARING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
 const firebaseApp = initializeApp(firebaseConfig);  

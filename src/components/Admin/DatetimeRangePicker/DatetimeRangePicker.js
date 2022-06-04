@@ -77,33 +77,34 @@ function DatetimeRangePicker({value, onChange}) {
                   onChange([newDate1, newDate2])
                 }
               }}
-              renderInput={(startProps, endProps) => {
-                if(startProps.inputProps?.value !== '' && endProps.inputProps?.value !== '')
-                  startProps.inputProps.value = startProps.inputProps.value + ' - ' + endProps.inputProps.value
-                else if(startProps.inputProps?.value !== '' && !endProps.inputProps)
-                  startProps.inputProps.value = startProps.inputProps.value + ' - ' + startProps.inputProps.value
-                else {
-                  startProps.inputProps.value = '---   ---   ---   -   ---   ---   ---'
-                }
-                return (
-                  <React.Fragment>
-                    <TextField {...startProps} 
-                      sx={style} 
-                      readOnly={true}
-                    />
-                    <img 
-                      className={styles.dateRangeIcon} 
-                      src={calendarIcon} 
-                      alt=" " 
-                      onClick={() => startProps.inputProps.onClick()} />
-                  </React.Fragment>
-                )}
-              }
+              renderInput={renderInput}
             />
           </LocalizationProvider>
         </div>
       </ThemeProvider>
       );
 }
+
+function renderInput (startProps, endProps) {
+  if(startProps.inputProps?.value !== '' && endProps.inputProps?.value !== '')
+    startProps.inputProps.value = startProps.inputProps.value + ' - ' + endProps.inputProps.value
+  else if(startProps.inputProps?.value !== '' && !endProps.inputProps)
+    startProps.inputProps.value = startProps.inputProps.value + ' - ' + startProps.inputProps.value
+  else {
+    startProps.inputProps.value = '---   ---   ---   -   ---   ---   ---'
+  }
+  return (
+    <React.Fragment>
+      <TextField {...startProps} 
+        sx={style} 
+        readOnly={true}
+      />
+      <img 
+        className={styles.dateRangeIcon} 
+        src={calendarIcon} 
+        alt=" " 
+        onClick={() => startProps.inputProps.onClick()} />
+    </React.Fragment>
+  )}
 
 export default memo(DatetimeRangePicker)

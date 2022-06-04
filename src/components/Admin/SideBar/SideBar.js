@@ -3,7 +3,7 @@ import styles from './SideBar.module.css'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 // image assets
-import logo from '../../../assets/custommer/logo@2x.png'
+import logo from '../../../assets/customer/logo@2x.png'
 import overviewIcon from '../../../assets/admin/overview.png'
 import ordersIcon from '../../../assets/admin/orders.png'
 import productsIcon from '../../../assets/admin/products.png'
@@ -65,7 +65,10 @@ function SideBar() {
     useEffect(() => {
         const pathName = location.pathname.split('/')
         const tabIndex = navigationList.findIndex(t => {
-            return t.slug === pathName[2]
+            if(pathName[2])
+                return t.slug === pathName[2]
+            else
+                return t.slug === ''
         })
         setCurrentTab(navigationList[tabIndex].title)
     }, [location])

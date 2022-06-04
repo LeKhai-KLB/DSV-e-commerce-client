@@ -1,0 +1,32 @@
+input.input {
+    width: 369px;
+    height: 44px;
+    padding-left: 24px;
+    border: none;
+    background-color: var(--white-two);
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    border: 1px solid var(--white-two);
+}
+
+input.input::placeholder {
+    opacity: 0.3;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: var(--greyish-brown);
+    outline: none;
+}
+
+input.input:focus {
+    outline: none;
+}

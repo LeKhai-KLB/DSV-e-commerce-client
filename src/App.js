@@ -5,14 +5,14 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
-import CustommerRoute from './routes/Custommer'
+import CustomerRoute from './routes/Customer'
 import AdminRoute from './routes/Admin'
 
-import Cart from './pages/Custommer/Cart'
-import Home from './pages/Custommer/Home'
-import Product from './pages/Custommer/Product'
-import Products from './pages/Custommer/Products'
-import Profile from './pages/Custommer/Profile'
+import Cart from './pages/Customer/Cart'
+import Home from './pages/Customer/Home'
+import Product from './pages/Customer/Product'
+import Products from './pages/Customer/Products'
+import Profile from './pages/Customer/Profile'
 
 import AdminLogin from './pages/Admin/Login'
 import AdminOrders from './pages/Admin/Orders'
@@ -27,8 +27,8 @@ function App() {
         <Routes>
 
           {/* non admin routes */}
-          <Route element={<CustommerRoute />}>
-            <Route index path="/" element={<Home />} exact/>
+          <Route element={<CustomerRoute />}>
+            <Route index path="/" element={<Home />}/>
             <Route path="products/:fstRankCategory/:seRankCategory" element={<Products />} />
             <Route path="product/:id" element={<Product />} />
             <Route path="cart" element={<Cart />} />
@@ -38,7 +38,7 @@ function App() {
           {/* admin routes */}
           <Route path="admin/login" element={<AdminLogin isLogin={isLogin} />} />
           <Route path="admin" element={<AdminRoute isLogin={isLogin} />}>
-            <Route index element={<AdminOrders />} exact/>
+            <Route index element={<AdminOrders />}/>
             <Route path="products" element={<AdminProducts />}/>
             <Route path="products/add_product" element={<AdminProductInfo />}/>
             <Route path="products/edit_product/:id" element={<AdminProductInfo />}/>

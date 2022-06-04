@@ -2,11 +2,11 @@ import {ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage'
 import { storageImage } from '../../firebase'
 
 export const getImageURL =  (file) => {
-    if(file.includes('firebasestorage'))
-        return new Promise((resolve, reject) => resolve((file)))
-        
+    if(!file?.name)
+        return new Promise((resolve, reject) => resolve(file))
+
     return new Promise(function (resolve, reject) {
-        const fileName = new Date().getTime() + file.name
+        const fileName = (new Date()).getTime() + file.name
         const storageRef = ref(storageImage, fileName);
         const uploadTask = uploadBytesResumable(storageRef, file);
 

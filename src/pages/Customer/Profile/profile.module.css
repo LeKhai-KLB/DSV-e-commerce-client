@@ -1,0 +1,138 @@
+div.profileContainer {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    height: 712px;
+    justify-content:space-between;
+}
+
+/* general styles */
+
+.typography {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--greyish-brown);
+}
+
+.semiBold {
+    font-weight: 500;
+    color: var(--dark-grey);
+}
+
+.bold {
+    font-weight: bold;
+    color: var(--dark-grey);
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+div.focus {
+    color: var(--bright-orange) !important;
+}
+
+/* profile side bar */
+div.profileSideBar {
+    flex: 0 0 146px;
+    height: 100%;
+    text-align: left;
+}
+
+/* profile side bar title - top */
+span.profileSideBarTitle {
+    display: block;
+    margin-top: 37px;
+    font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: var(--dark-grey);
+}
+
+/* profile side bar tab container - bottom */
+div.tabContainer {
+    margin-top: 24px;
+}
+
+div.tabItem {
+    width: 100%;
+    padding: 9px 0px;
+}
+
+
+/* tab content container */
+div.tabContentContainer {
+    flex: 1;
+    margin: 42px 0px 0px 104px ;
+}
+
+/* task bar */
+div.taskBar {
+    width: 501px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 13px;
+}
+
+/* form */
+form.form {
+    width: 401px;
+    padding: 26px 50px 35px 50px;
+    background-color: #f9f9f9;
+}
+
+/* content container */
+div.contentContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* field container */
+div.fieldsContainer {
+    display: flex;   
+    flex-flow: column;
+}
+
+span.fieldMargin {
+    margin: 5px 0px 33px 0px
+}
+
+label.label {
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: var(--dark-grey);
+}
+
+/* avatar container */
+div.avatarContainer {
+    position: relative;
+}
+
+img.avatar {
+    margin-top: 12px;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 50%;
+}
+
+/* edit mode */
+
+
+
+/* button container */

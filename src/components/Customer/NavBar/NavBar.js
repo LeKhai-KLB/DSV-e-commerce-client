@@ -14,6 +14,7 @@ import logo_3x from '../../../assets/customer/logo@3x.png'
 import placeholder from '../../../assets/shared/placeholder/placeholder.png'
 import searchIcon from '../../../assets/shared/icon/search.png'
 import arrowIcon from '../../../assets/shared/icon/arrow.png'
+import questionIcon from '../../../assets//customer/question.png'
 
 // selector
 import { userSelector } from '../../../redux/selector'
@@ -230,12 +231,12 @@ function NavBar(){
 // UnloggedInBox component
 function UnloggedInBox() {
 
-    const {toggleShowRegisterBox, toggleShowLoginBox} = useContext(requiredAuthContext)
+    const {setCurrenShowBox} = useContext(requiredAuthContext)
 
     return (
         <div className={styles.UnloggedInBox + ' ' + styles.font}>
-            <button onClick={toggleShowRegisterBox} className={styles.registerButton + ' ' + styles.activeStyle} >Register</button>
-            <button onClick={toggleShowLoginBox} className={styles.loginButton + ' ' + styles.activeStyle} >Log In</button>
+            <button onClick={() => setCurrenShowBox(1)} className={styles.registerButton + ' ' + styles.activeStyle} >Register</button>
+            <button onClick={() => setCurrenShowBox(2)} className={styles.loginButton + ' ' + styles.activeStyle} >Log In</button>
         </div>
     )
 }
@@ -244,6 +245,7 @@ function UnloggedInBox() {
 function LoggedInBox({user}) {
     const dispatch = useDispatch()
     const nav = useNavigate()
+    const { setCurrenShowBox } = useContext(requiredAuthContext)
     const [showSettingBox, setShowSettingBox] = useState(false)
 
     const handleLogout = () => {
@@ -252,6 +254,15 @@ function LoggedInBox({user}) {
 
     return (
         <div className={styles.loggedInBox}>
+            {
+                !user.isVerified &&
+                <img 
+                    className={styles.questionIcon} 
+                    src={questionIcon} 
+                    alt=" " 
+                    onClick={() => setCurrenShowBox(4)}
+                />
+            }
             <img 
                 src={user?.avatar ? user?.avatar:placeholder} className={styles.avatar + ' ' + styles.activeStyle} 
                 alt="avatar"  

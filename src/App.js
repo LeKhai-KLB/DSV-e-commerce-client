@@ -13,6 +13,7 @@ import Home from './pages/Customer/Home'
 import Product from './pages/Customer/Product'
 import Products from './pages/Customer/Products'
 import Profile from './pages/Customer/Profile'
+import VerifyEmail from './pages/Customer/VerifyEmail'
 
 import AdminLogin from './pages/Admin/Login'
 import AdminOrders from './pages/Admin/Orders'
@@ -27,6 +28,7 @@ function App() {
         <Routes>
 
           {/* non admin routes */}
+          <Route path="verify-email" element={<VerifyEmail />} />
           <Route element={<CustomerRoute />}>
             <Route index path="/" element={<Home />}/>
             <Route path="products/:fstRankCategory/:seRankCategory" element={<Products />} />

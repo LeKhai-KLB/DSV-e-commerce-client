@@ -15,12 +15,20 @@ const authSlice = createSlice({
         start: (state) => {
             state.pendingState = true
         },
+        updateInfo: (state, action) => {
+            if(action.payload) {
+                const jwt = state.user.jwt
+                state.user = {...action.payload, jwt: jwt}
+            }
+        },
         successful: (state, action) => {
             state.pendingState = false
-            if(action.payload?.isAdmin)
-                state.admin = {...action.payload, jwt: 'bearer ' + action.payload.jwt}
-            else
-                state.user = {...action.payload, jwt: 'bearer ' + action.payload.jwt}
+            if(action.payload) {
+                if(action.payload?.isAdmin)
+                    state.admin = {...action.payload, jwt: 'bearer ' + action.payload.jwt}
+                else
+                    state.user = {...action.payload, jwt: 'bearer ' + action.payload.jwt}
+            }
         },
         logout: (state) => {
             return initialState
@@ -28,5 +36,5 @@ const authSlice = createSlice({
     }
 })
 
-export const { start, successful, logout } = authSlice.actions
+export const { start, successful, logout, updateInfo } = authSlice.actions
 export default authSlice.reducer

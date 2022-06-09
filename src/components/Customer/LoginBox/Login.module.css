@@ -172,11 +172,6 @@ span.fogotPasswordButton {
     cursor: pointer;
 }
 
-.errorStateStyle {
-    border: solid 1px var(--strawberry) !important;
-    background-color: rgba(246, 63, 69, 0.04) !important;
-}
-
 .spanBox {
     height: 66px;
     width: 284px;

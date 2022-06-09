@@ -27,8 +27,13 @@ const cartSlice = createSlice({
                 }
             }
             else {
-                state.cart.push(action.payload)
-                state.state = ['Succeccfully added']
+                if(quantity > totalInStock) {
+                    state.state = ['Out of stock']
+                }
+                else {
+                    state.cart.push(action.payload)
+                    state.state = ['Succeccfully added']
+                }
             }
         }, 
         removeProduct: (state, action) => {

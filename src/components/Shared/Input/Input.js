@@ -1,17 +1,17 @@
 import { memo } from 'react'
 import styles from './Input.module.css'
 
-function Input(props) {
+function Input({required, name, register, readOnly, ...props}) {
     return (
         <input
-            value = {props.value}
-            onChange = {props.onChange}
-            name = {props.name}
-            id = {props.id}
+            name = {name}
             type = {props.type}
-            className = {styles.input}
+            className = {`${styles.input} ${props.invalid ? styles.errorStateStyle:''}`}
             placeholder = {props.placeholder}
             style={props.style}
+            {...register(name, {required: required})}
+            spellCheck={false}
+            readOnly={readOnly ? true:false}
         />
     )
 }

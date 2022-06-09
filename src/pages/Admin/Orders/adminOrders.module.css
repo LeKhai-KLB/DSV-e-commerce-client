@@ -1,5 +1,5 @@
 div.adminOrdersPageContainer {
-    flex:1 850px;
+    flex: 1 1 880px;
     margin-bottom: 26px;    
     display: flex;
     flex-flow: column;
@@ -334,7 +334,7 @@ span.detailsBoxTitle {
     height: 200px;
     padding: 14px 16px;
     border-radius: 2px;
-    border: solid 1px var(--greyish);
+    border: solid 1px var(--pinkish-grey);
     border-top: none;
     border-left: none;
     border-right: none;

@@ -333,6 +333,7 @@ div.sameCategoriesImageCardContainer {
     display: flex;
     justify-content: space-between;
     padding-top: 30px;
+    margin-top: 64px;
 }
 
 div.sameCategoryCardContainer {

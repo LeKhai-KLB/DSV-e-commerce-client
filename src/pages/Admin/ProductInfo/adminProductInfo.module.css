@@ -172,8 +172,11 @@ span.label {
     letter-spacing: normal;
     text-align: right;
     color: var(--dark-grey);
-    margin-right: 20px;
-    text-transform: uppercase
+    text-transform: uppercase;
+}
+
+.mr8 {
+    margin-right: 8px;
 }
 
 input.input {

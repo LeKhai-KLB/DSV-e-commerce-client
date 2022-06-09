@@ -1,16 +1,49 @@
 import { memo, useContext, useState, useEffect, useRef } from 'react'
 import styles from './ForgotPasswordBox.module.css'
 import { requiredAuthContext } from '../../../routes/Customer'
+import Input from '../../Shared/Input'
+import Button from '../../Shared/Button'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
+import axios from 'axios'
+import 'react-toastify/dist/ReactToastify.css';
 
 // image assets
 import crossIcon from '../../../assets/shared/icon/cross.png'
 
 function ForgotPasswordBox() {
-    const [emailFieldValue, setEmailFieldValue] = useState('')
-    const {toggleShowLoginBox, toggleShowForgotPasswordBox} = useContext(requiredAuthContext)
+    const [preventButtonEvent, setPreventButtonEvent] = useState(false)
+    const {setCurrenShowBox, setInitEmail} = useContext(requiredAuthContext)
 
-    const handleSubmit = (e) => {   
-        e.preventDefault();
+    const { register, handleSubmit, formState: { isDirty } } = useForm({
+        defaultValues: {
+            email: ''
+        },
+    })
+
+    const onSubmit = async (data) => {
+        const loadingId = toast.loading('loading')
+        setPreventButtonEvent(true)
+        try {
+            const res = await axios.post(process.env.REACT_APP_RESET_PASSWORD, {email: data.email})
+            if(res.data.status === 200) {
+                toast.dismiss(loadingId)
+                toast.success('Successfully sending password to your email')
+                setTimeout(() => {
+                    setInitEmail(res.data.resultData)
+                    setCurrenShowBox(2)
+                }, 1500)
+            }
+            else {
+                throw new Error(res.data.errorMessage)
+            }
+        }
+        catch(err) {
+            setPreventButtonEvent(false)
+            toast.dismiss(loadingId)
+            toast.error(err.message)
+            console.log(err)
+        }
     }
     
     return (
@@ -18,9 +51,9 @@ function ForgotPasswordBox() {
 
             <div className={styles.overlay} />
 
-            <form className={styles.ForgotPasswordForm} onSubmit={e => handleSubmit(e)} >
+            <form className={styles.ForgotPasswordForm} onSubmit={handleSubmit(onSubmit)} >
 
-                <img onClick={toggleShowForgotPasswordBox} src={crossIcon} alt="exit" className={styles.crossIcon}/>
+                <img onClick={() => setCurrenShowBox(0)} src={crossIcon} alt="exit" className={styles.crossIcon}/>
 
                 <span className={styles.forgotPasswordBoxTitle}>
                     Forgot password
@@ -37,24 +70,25 @@ function ForgotPasswordBox() {
                     <label className={styles.forgotPasswordBoxLabel} htmlFor="emailInput" >
                         email
                     </label>
-                    <input 
-                        value={emailFieldValue} 
-                        onChange={e => setEmailFieldValue(e.target.value)}
-                        name="Email" id="emailInput" 
-                        className={styles.forgotPasswordBoxInput} 
+                    <Input 
+                        name="email" 
+                        type="text"
                         placeholder="Enter your email..."
+                        style={{marginTop: '8px'}}
+                        register={register}
+                        required={true}
                     />
 
                 </div>
 
                 {/* Forgot password button */}
-                <button 
-                    name="SubmitButton" 
+                <Button 
                     type="submit" 
-                    className={`${styles.forgotPasswordBoxButton} ${emailFieldValue !== '' ? styles.activeButton:''}`}
+                    preventDefault={preventButtonEvent}
+                    isActive={isDirty}
                 >
                     Submit
-                </button>
+                </Button>
                 
                 {/* navigate login button */}
                 <span className={styles.spanBox}>
@@ -62,7 +96,7 @@ function ForgotPasswordBox() {
                     <span 
                         className={styles.highlight} 
                         style={{'cursor': 'pointer', 'marginLeft': '4px'}}
-                        onClick={toggleShowLoginBox}
+                        onClick={() => setCurrenShowBox(2)}
                     >
                         Login 
                     </span>

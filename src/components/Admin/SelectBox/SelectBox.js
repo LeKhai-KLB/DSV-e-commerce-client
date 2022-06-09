@@ -6,7 +6,23 @@ import addIcon from '../../../assets/shared/icon/add.png'
 import closeIcon from '../../../assets/shared/icon/closeCircle.png'
 import { useEffect } from 'react';
 
-function SelectBox({title, data=null, only=false, addMore=true, onChange, handleLoad=null, initData=null}) {
+function SelectBox({
+    reload=false, 
+    title, 
+    boxStyle=null, 
+    data=null, 
+    only=false, 
+    addMore=true, 
+    onChange, 
+    handleLoad=null, 
+    initData=null, 
+    required=false, 
+    style=null, 
+    containerStyle=null,
+    handleAdd=null,
+    newValue=null,
+    setNewValue=null
+}) {
     const [dataList, setdataList] = useState(data)
     const [optionList, setOptionList] = useState([])
     const [selectedOption, setSelectedOption] = useState({})
@@ -23,10 +39,18 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
         }
     }, [initData])
 
+    useEffect(() => {
+        if(newValue) {
+            setdataList(prev => {return [...prev, newValue]})
+            setOptionList(prev => {return [...prev, newValue]})
+            setNewValue(null)
+        }
+    }, [newValue])
+
     const handleShowOptionsBox = async (e) => {
         if(e.target.id !== 'noDropdown'){
             if(!showBox) {
-                if(!dataList) {
+                if(reload) {
                     if(handleLoad) {
                         try {
                             const newData = await handleLoad()
@@ -37,11 +61,34 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
                         }
                     }
                 }
+                else {
+                    if(!dataList) {
+                        if(handleLoad) {
+                            try {
+                                const newData = await handleLoad()
+                                setdataList(newData)
+                            }
+                            catch(err) {
+                                setdataList(null)
+                            }
+                        }
+                    }
+                }
                 setShowBox(true)
             }
             else {
                 setShowBox(false)
             }
+        }
+    }
+
+    const handleReload = async () => {
+        try {
+            const newData = await handleLoad()
+            setdataList(newData)
+        }
+        catch(err) {
+            setdataList(null)
         }
     }
 
@@ -78,11 +125,19 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
     }, [optionList])
 
     return (
-        <div className={styles.field}>
-            <span className={styles.label}>
-                {title}
-            </span>
-            <div className={styles.dropdownBar}  onClick={(e) => handleShowOptionsBox(e)}>
+        <div className={styles.field} style={containerStyle ? containerStyle:{}}>
+            {
+                title && 
+                <span className={styles.label}>
+                    {title}
+                </span>
+            }
+            {
+                title ? (required ? 
+                <span style={{color: 'red', fontSize: '14px', margin: '0px 20px 0px 5px'}}> * </span> :
+                <span style={{margin: '0px 20px 0px 14.5px'}} />):<></>
+            }
+            <div className={styles.dropdownBar} onClick={(e) => handleShowOptionsBox(e)} style={style ? style:{}}>
                 <img 
                     className={styles.largeIcon + ' ' + styles.absoluteEffectIcon} 
                     src={dropdownIcon} 
@@ -93,10 +148,11 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
                         only ?
                         (
                             <input 
+                                style={style ? style:{}}
                                 id="noDropdown"
                                 value={selectedOption?.name ? selectedOption.name:''}
                                 className={styles.optionTitle} 
-                                placeholder={'Enter or select ' + title}
+                                placeholder={'Enter or select '}
                                 onChange={(e) => {
                                     if(e.target.value !== ''){
                                         setSelectedOption({
@@ -112,7 +168,7 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
                             />
                         ):
                         (optionList.length === 0 ?
-                            <span className={styles.optionTitle}>Select {title}</span>:
+                            <span className={styles.optionTitle} style={boxStyle ? boxStyle:{}}>Select</span>:
                             optionList.map((e, i) => (
                                 <div key={i} className={styles.tagBox}>
                                     {e.name}
@@ -130,7 +186,7 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
 
             {
                 showBox && dataList &&
-                <div className={styles.optionsContainer}>
+                <div className={styles.optionsContainer} style={boxStyle ? boxStyle : {}}>
                     <div className={styles.optionsContent}>
                         {
                             dataList.map((d, i) => (
@@ -152,9 +208,12 @@ function SelectBox({title, data=null, only=false, addMore=true, onChange, handle
                         }
                     </div>
                     {addMore && 
-                        <div className={styles.addNewOption}>
+                        <div className={styles.addNewOption} onClick={handleAdd ? () => {
+                            handleAdd(true)
+                            setShowBox(false)
+                        }: null} >
                             <img src={addIcon} className={styles.largeIcon} alt=" " />
-                            <p className={styles.note} style={{margin: '0px 0px 0px 12px'}}>Add icon</p>
+                            <p className={styles.note} style={{margin: '0px 0px 0px 12px'}}>Add</p>
                         </div>
                     }
                 </div>

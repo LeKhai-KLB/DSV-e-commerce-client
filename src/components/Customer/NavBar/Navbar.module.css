@@ -79,6 +79,8 @@ img.searchIcon:active {
     opacity: .3
 }
 
+
+
 input.searchInput {
     outline: none;
     border: none;
@@ -289,6 +291,16 @@ div.categoryContainer {
     display:flex;
     justify-content: center;
     align-items: center;
+}
+
+img.questionIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    opacity: 0.4;
+    cursor: pointer;
+    margin-right: 15px;
 }
 
 

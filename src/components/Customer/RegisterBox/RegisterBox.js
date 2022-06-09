@@ -1,112 +1,84 @@
 import { memo, useEffect, useState, useContext } from 'react'
 import styles from './RegisterBox.module.css'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux';
 import { registerService } from '../../../services/authServices'
 import { requiredAuthContext } from '../../../routes/Customer'
+import Input from '../../Shared/Input'
+import Button from '../../Shared/Button'
+import Yup, { yupValidator } from '../../../services/validatorServices'
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, useFormState } from 'react-hook-form'
 
 // image assets
 import crossIcon from '../../../assets/shared/icon/cross.png'
 
+const schema = Yup.object().shape({
+    email: yupValidator.email,
+    name: yupValidator.name,
+    password: yupValidator.password
+})
+
 function RegisterBox() {
-    const [nameFieldValue, setNameFieldValue] = useState('')
-    const [emailFieldValue, setEmailFieldValue] = useState('')
-    const [passwordFieldValue, setPasswordFieldValue] = useState('')
+    const {setCurrenShowBox} = useContext(requiredAuthContext)
+    const [preventButtonEvent, setPreventButtonEvent] = useState(false)
     const dispatch = useDispatch()
-    const {toggleShowRegisterBox, toggleShowLoginBox} = useContext(requiredAuthContext)
     let loadingId
 
-    useEffect(() => {
-        if(nameFieldValue !== '' && emailFieldValue !== '' && passwordFieldValue !== ''){
-            const form = document.querySelector(`.${styles.registerForm}`)
-            if(!form.SubmitButton.classList.contains(styles.activeButton))
-                form.SubmitButton.classList.add(styles.activeButton)
-        }
-        else{
-            const form = document.querySelector(`.${styles.registerForm}`)
-            if(form.SubmitButton.classList.contains(styles.activeButton))
-                form.SubmitButton.classList.remove(styles.activeButton)
-        }
-    }, [nameFieldValue, emailFieldValue, passwordFieldValue])
+    const { register, handleSubmit, control, formState: { errors, isValid }, clearErrors } = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: {
+            email: '',
+            password: '',
+            name: ''
+        },
+    })
 
-    const handleValidate = (e) => {
-        const emailRegex = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$', 'g')
-        const nameRegex = new RegExp('^[A-Za-z0-9 ]+$', 'g')
-        let error = false
-        if(!nameRegex.test(nameFieldValue)){
-            e.target.children[2].children[2].classList.remove(styles.hiddenValidate)
-            e.target.Name.classList.add(styles.errorStateStyle)
-            error = true
-        }
-        else{
-            e.target.children[2].children[2].classList.add(styles.hiddenValidate)
-            e.target.Name.classList.remove(styles.errorStateStyle)
-        }
-        if(!emailRegex.test(emailFieldValue)){
-            e.target.children[2].children[5].classList.remove(styles.hiddenValidate)
-            e.target.Email.classList.add(styles.errorStateStyle)
-            error = true
-        }
-        else{
-            e.target.children[2].children[5].classList.add(styles.hiddenValidate)
-            e.target.Email.classList.remove(styles.errorStateStyle)
-        }
-        if(passwordFieldValue.length <= 5){
-            e.target.children[2].children[8].classList.remove(styles.hiddenValidate)
-            e.target.Password.classList.add(styles.errorStateStyle)
-            error = true
-        }
-        else{
-            e.target.children[2].children[8].classList.add(styles.hiddenValidate)
-            e.target.Password.classList.remove(styles.errorStateStyle)
-        }
-        return error
-    }
+    const { dirtyFields } = useFormState({ control })
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        if(!handleValidate(e)) {
-            try {
-                e.target.style.setProperty('pointer-events', 'none', 'important')
-                e.target.SubmitButton.style.setProperty('pointer-events', 'none')
-                loadingId = toast.loading('Loading')
-                const res = await registerService(dispatch, {
-                    userName: nameFieldValue,
-                    email: emailFieldValue,
-                    password: passwordFieldValue
-                })
-                if(res?.errorMessage) {
-                    toast.dismiss(loadingId)
-                    toast.error(res?.errorMessage)
-                }
-                else {
-                    toast.dismiss(loadingId)
-                    toast.success('successfully register')
-                    setTimeout(() => {
-                        toggleShowRegisterBox()
-                    }, 2000)
-                }
-                e.target.style.pointerEvents = 'all'
-                e.target.style.setProperty('pointer-events', 'all', 'important')
-            }
-            catch (err) {
-                e.target.style.setProperty('pointer-events', 'all', 'important')
+    useEffect(() =>{
+        if(!isValid) {
+            if(Object.keys(dirtyFields).length < 3)
+                clearErrors(Object.keys(errors));
+        }
+    }, [Object.keys(dirtyFields).length])
+
+    const onSubmit = async (data) => {
+        try {
+            setPreventButtonEvent(true)
+            loadingId = toast.loading('Loading')
+            const res = await registerService(dispatch, {
+                userName: data.name,
+                email: data.email,
+                password: data.password
+            })
+            if(res?.errorMessage) {
+                setPreventButtonEvent(false)
                 toast.dismiss(loadingId)
-                toast.error(err.message)
+                toast.error(res?.errorMessage)
             }
+            else {
+                toast.dismiss(loadingId)
+                toast.info('successfully register, we have sent you a verify email, please check !')
+                setTimeout(() =>{
+                    setCurrenShowBox(0)
+                }, 1500)
+            }
+        }
+        catch (err) {
+            setPreventButtonEvent(false)
+            toast.dismiss(loadingId)
+            toast.error(err.message)
         }
     }
 
     return (
         <div className={styles.registerContainer}>
 
-            <ToastContainer />
-
             <div className={styles.overlay} />
-            <form className={styles.registerForm} onSubmit={e => handleSubmit(e)} >
+            <form className={styles.registerForm} onSubmit={handleSubmit(onSubmit)} autoComplete="off" >
 
-                <img onClick={toggleShowRegisterBox} src={crossIcon} alt="exit" className={styles.crossIcon}/>
+                <img onClick={() => setCurrenShowBox(0)} src={crossIcon} alt="exit" className={styles.crossIcon}/>
 
                 <span className={styles.registerBoxTitle}>
                     Register
@@ -118,47 +90,57 @@ function RegisterBox() {
                     <label className={styles.registerBoxLabel} htmlFor="nameInput" >
                         name
                     </label>
-                    <input
-                        value={nameFieldValue}
-                        onChange={e => setNameFieldValue(e.target.value)} 
-                        name="Name" 
-                        id="nameInput" 
-                        className={styles.registerBoxInput} 
+                    <Input
+                        name="name" 
+                        type="text"
                         placeholder="Enter your name..."
+                        style={{marginTop: '8px'}}
+                        register={register}
+                        invalid={errors?.name ? true:false}
+                        required={true}
                     />
-                    <span name="NameValidate" className={styles.errorBlogger + ' ' + styles.hiddenValidate}>
-                        Please enter a valid name!
+                    <span 
+                        className={`${styles.errorBlogger} ${errors?.name ? '':styles.hiddenValidate}`}
+                    >
+                        {errors?.name?.message ? errors?.name?.message:'none'}
                     </span>
 
                     {/* Email */}
                     <label className={styles.registerBoxLabel} htmlFor="emailInput" >
                         email
                     </label>
-                    <input 
-                        value={emailFieldValue} 
-                        onChange={e => setEmailFieldValue(e.target.value)}
-                        name="Email" id="emailInput" 
-                        className={styles.registerBoxInput} 
+                    <Input 
+                        name="email" 
+                        type="text"
                         placeholder="Enter your email..."
+                        style={{marginTop: '8px'}}
+                        invalid={errors?.email ? true:false}
+                        register={register}
+                        required={true}
                     />
-                    <span name="EmailValidate" className={styles.errorBlogger + ' ' + styles.hiddenValidate}>
-                        Please enter a valid email!
+                    <span 
+                        className={`${styles.errorBlogger} ${errors?.email ? '':styles.hiddenValidate}`}
+                    >
+                        {errors?.email?.message ? errors?.email?.message:'none'}
                     </span>
 
                     {/* Email */}
                     <label className={styles.registerBoxLabel} htmlFor="passwordInput" >
                         password
                     </label>
-                    <input 
-                        value={passwordFieldValue}
-                        onChange={e => setPasswordFieldValue(e.target.value)}
-                        name="Password" 
-                        id="passwordInput" 
-                        type="password" 
-                        className={styles.registerBoxInput} placeholder="Enter your password..."
+                    <Input 
+                        name="password" 
+                        type="password"
+                        placeholder="Enter your password..."
+                        style={{marginTop: '8px'}}
+                        register={register}
+                        invalid={errors?.password ? true:false}
+                        required={true}
                     />
-                    <span name="PasswordValidate"  className={styles.errorBlogger + ' ' + styles.hiddenValidate}>
-                        Your passwords must be more than 6 characters!
+                    <span
+                        className={`${styles.errorBlogger} ${errors?.password ? '':styles.hiddenValidate}`}
+                    >
+                        {errors?.password?.message ? errors?.password?.message:'none'}
                     </span>
                 </div>
 
@@ -167,7 +149,7 @@ function RegisterBox() {
                     By creating an account you agree to the<span className={styles.hightlight}> Terms of Service </span>and<span className={styles.hightlight}> Privacy Policy</span>
                 </span>
                 
-                <button name="SubmitButton" type="submit" className={styles.registerBoxButton}>Register</button>
+                <Button type="submit" preventDefault={preventButtonEvent} isActive={Object.keys(dirtyFields).length === 3 ? true:false}>Register</Button>
 
                 {/* login navigate */}
                 <span className={styles.privacyBox + ' ' + styles.spanBox}>
@@ -175,7 +157,7 @@ function RegisterBox() {
                     <span 
                         className={styles.highlight} 
                         style={{'cursor': 'pointer', 'marginLeft': '4px'}}
-                        onClick={toggleShowLoginBox}
+                        onClick={() => setCurrenShowBox(2)}
                     >
                         Log In 
                     </span>

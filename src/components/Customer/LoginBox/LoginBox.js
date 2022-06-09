@@ -1,104 +1,105 @@
 import { memo, useContext, useEffect, useState } from 'react'
 import styles from './Login.module.css'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify'
 import { requiredAuthContext } from '../../../routes/Customer'
 import { loginService } from '../../../services/authServices'
 import { useDispatch } from 'react-redux'
 import Input from '../../Shared/Input'
 import Button from '../../Shared/Button'
-import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
+import Yup, { yupValidator } from '../../../services/validatorServices'
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, useFormState } from 'react-hook-form'
 
 // image assets
 import crossIcon from '../../../assets/shared/icon/cross.png'
 import checkBoxIcon from '../../../assets/shared/icon/check-box.png'
 
-function LoginBox() {
-    const {toggleShowLoginBox, toggleShowRegisterBox, toggleShowForgotPasswordBox} = useContext(requiredAuthContext)
-    const [emailFieldValue, setEmailFieldValue] = useState('')
-    const [passwordFieldValue, setPasswordFieldValue] = useState('')
+const schema = Yup.object().shape({
+    email: yupValidator.email,
+    password: yupValidator.password
+})
+
+function LoginBox({initEmail}) {
+    const {setCurrenShowBox, setInitEmail} = useContext(requiredAuthContext)
     const [rememberOption, setRememberOption] = useState(true)
+    const [showError, setShowError] = useState(false)
+    const [preventButtonEvent, setPreventButtonEvent] = useState(false)
     const dispatch = useDispatch()
     let loadingId
 
-    useEffect(() => {
-        if(emailFieldValue !== '' && passwordFieldValue !== ''){
-            const form = document.querySelector(`.${styles.loginForm}`)
-            if(!form.SubmitButton.classList.contains(styles.activeButton))
-                form.SubmitButton.classList.add(styles.activeButton)
-        }
-        else{
-            const form = document.querySelector(`.${styles.loginForm}`)
-            if(form.SubmitButton.classList.contains(styles.activeButton))
-                form.SubmitButton.classList.remove(styles.activeButton)
-        }
-    }, [emailFieldValue, passwordFieldValue])
+    const { register, handleSubmit, control, setValue } = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onChange',
+        defaultValues: {
+            email: '',
+            password: ''
+        },
+    })
 
-    const handleValidate = (e) => {
-        const emailRegex = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$', 'g')
-        let error = false
-        if(!emailRegex.test(emailFieldValue || passwordFieldValue.length <= 5)){
-            e.target.children[1].children[0].classList.add(styles.showValidate)
-            e.target.Email.classList.add(styles.errorStateStyle)
-            e.target.Password.classList.add(styles.errorStateStyle)
-            error = true
-        }
-        else{
-            e.target.children[1].children[0].classList.remove(styles.showValidate)
-            e.target.Email.classList.remove(styles.errorStateStyle)
-            e.target.Password.classList.remove(styles.errorStateStyle)
-        }
-        return error
-    }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        
-        if(!handleValidate(e)) {
-            try {
-                e.target.style.setProperty('pointer-events', 'none', 'important')
-                e.target.SubmitButton.style.setProperty('pointer-events', 'none')
-                loadingId = toast.loading('Loading')
-                const res = await loginService(dispatch, {
-                    email: emailFieldValue,
-                    password: passwordFieldValue
-                })
-                if(res?.errorMessage) {
-                    toast.dismiss(loadingId)
-                    toast.error(res?.errorMessage)
-                }
-                else {
-                    toast.dismiss(loadingId)
-                    toast.success('successfully login')
-                    setTimeout(() => {
-                        toggleShowLoginBox()
-                    }, 1500)
-                }
-                e.target.style.setProperty('pointer-events', 'all', 'important')
-            }
-            catch (err) {
-                e.target.style.setProperty('pointer-events', 'all', 'important')
+    const { dirtyFields } = useFormState({ control })
+
+    const onSubmit = async (data) => {
+        try {
+            loadingId = toast.loading('Loading')
+            setPreventButtonEvent(true)
+            const res = await loginService(dispatch, {
+                email: data.email,
+                password: data.password
+            })
+            if(res?.errorMessage) {
+                setPreventButtonEvent(false)
                 toast.dismiss(loadingId)
-                toast.error(err.message)
+                toast.error(res?.errorMessage)
+            }
+            else {
+                toast.dismiss(loadingId)
+                toast.success('successfully login')
+                setTimeout(() => {
+                    setCurrenShowBox(0)
+                }, 1500)
             }
         }
+        catch (err) {
+            setPreventButtonEvent(false)
+            toast.dismiss(loadingId)
+            toast.error(err.message)
+        }
     }
+
+    const onError = () => {
+        setShowError(true)
+    }
+
+    useEffect(() => {
+        if(showError) {
+            if(Object.keys(dirtyFields).length < 2)
+                setShowError(false)
+        }
+    }, [Object.keys(dirtyFields).length])
+
+    useEffect(() => {
+        if(initEmail) 
+            setValue('email', initEmail, {shouldDirty: true})
+    }, [initEmail])
+
+    useEffect(() => {
+        return () => {
+            setInitEmail(null)
+        }
+    },[])
     
     return (
         <div className={styles.loginContainer} >
 
-            <ToastContainer />
-
             <div className={styles.overlay} />
-            <form className={styles.loginForm} onSubmit={e => handleSubmit(e)} >
+            <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit, onError)} >
 
-                <img onClick={toggleShowLoginBox} src={crossIcon} alt="exit" className={styles.crossIcon}/>
+                <img onClick={() => setCurrenShowBox(0)} src={crossIcon} alt="exit" className={styles.crossIcon}/>
 
                 <span className={styles.loginBoxTitle}>
                     Login
-                    <span className={styles.validateMessage}>Your e-mail/password is invalid!</span>
+                    <span className={`${styles.validateMessage} ${showError ? styles.showValidate:''}`}>Your e-mail/password is invalid!</span>
                 </span>
 
 
@@ -110,12 +111,13 @@ function LoginBox() {
                         email
                     </label>
                     <Input 
-                        value={emailFieldValue} 
-                        onChange={e => setEmailFieldValue(e.target.value)}
-                        name="Email" id="emailInput" 
-                        className={styles.loginBoxInput} 
+                        name="email" 
+                        type="text"
                         placeholder="Enter your email..."
                         style={{margin: '8px 0px 24px'}}
+                        register={register}
+                        invalid={showError}
+                        required={true}
                     />
 
                     {/* Password */}
@@ -123,15 +125,13 @@ function LoginBox() {
                         password
                     </label>
                     <Input 
-                        value={passwordFieldValue}
-                        onChange={e => setPasswordFieldValue(e.target.value)}
-                        name="Password" 
-                        id="passwordInput" 
+                        name="password" 
                         type="password" 
-                        className={styles.loginBoxInput} 
                         placeholder="Enter your password..."
                         style={{margin: '8px 0px 24px'}}
-
+                        register={register}
+                        invalid={showError}
+                        required={true}
                     />
 
                     {/* selection box */}
@@ -150,7 +150,7 @@ function LoginBox() {
                         <div className={styles.fogotPasswordBox}>
                             <span 
                                 className={styles.fogotPasswordButton} 
-                                onClick={toggleShowForgotPasswordBox}
+                                onClick={() => setCurrenShowBox(3)}
                             >
                                 Forgot your password?
                             </span>
@@ -160,7 +160,7 @@ function LoginBox() {
                 </div>
 
                 {/* login button */}
-                <Button name="SubmitButton" type="submit" isActive={false}>Login</Button>
+                <Button type="submit" preventDefault={preventButtonEvent} isActive={Object.keys(dirtyFields).length === 2 ? true:false}>Login</Button>
                 
                 {/* navigate register button */}
                 <span className={styles.spanBox}>
@@ -168,7 +168,7 @@ function LoginBox() {
                     <span 
                         className={styles.highlight} 
                         style={{'cursor': 'pointer', 'marginLeft': '4px'}}
-                        onClick={toggleShowRegisterBox}
+                        onClick={() => setCurrenShowBox(1)}
                     >
                         Register 
                     </span>

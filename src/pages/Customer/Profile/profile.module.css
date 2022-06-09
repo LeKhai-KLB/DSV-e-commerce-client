@@ -73,6 +73,7 @@ div.tabItem {
 div.tabContentContainer {
     flex: 1;
     margin: 42px 0px 0px 104px ;
+    display: block;
 }
 
 /* task bar */
@@ -85,14 +86,35 @@ div.taskBar {
 }
 
 /* form */
-form.form {
+form.viewForm {
     width: 401px;
+    padding: 26px 50px 25px 50px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-flow: column;
+}
+
+form.editForm {
+    width: 401px;
+    height: 290px;
     padding: 26px 50px 35px 50px;
     background-color: #f9f9f9;
+    display: flex;
+    flex-flow: column;
+}
+
+form.changePasswordForm {
+    width: 401px;
+    height: 390px;
+    padding: 26px 50px 35px 50px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-flow: column;
 }
 
 /* content container */
 div.contentContainer {
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
@@ -119,7 +141,12 @@ label.label {
 
 /* avatar container */
 div.avatarContainer {
-    position: relative;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    position:relative;
 }
 
 img.avatar {
@@ -129,9 +156,34 @@ img.avatar {
     object-fit: contain;
     object-position: center;
     border-radius: 50%;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+img.icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    object-position: center;
+    cursor: pointer;
+    opacity: .6;
 }
 
 /* edit mode */
+img.nonGravity {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    object-position: center;
+    cursor: pointer;
+    position: absolute;
+    top: 50px;
+    z-index: 1;
+}
+
+input.imageInput {
+    display: none;
+}
+
 
 
 

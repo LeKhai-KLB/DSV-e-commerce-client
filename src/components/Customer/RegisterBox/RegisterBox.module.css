@@ -87,40 +87,6 @@ label.registerBoxLabel {
     text-transform: uppercase
 }
 
-input.registerBoxInput {
-    width: 369px;
-    height: 44px;
-    margin-top: 8px;
-    padding-left: 24px;
-    border: none;
-    background-color: var(--white-two);
-    font-family: Montserrat;
-    font-size: 14px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.43;
-    letter-spacing: normal;
-    border: 1px solid var(--white-two)
-}
-
-input.registerBoxInput::placeholder {
-    opacity: 0.3;
-    font-family: Montserrat;
-    font-size: 14px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.57;
-    letter-spacing: normal;
-    color: var(--greyish-brown);
-    outline: none;
-}
-
-input.registerBoxInput:focus {
-    outline: none;
-}
-
 span.errorBlogger {
     font-family: Montserrat;
     font-size: 10px;
@@ -153,43 +119,6 @@ span.privacyBox > .highlight {
     color: var(--pumpkin-orange);
     text-decoration: underline;
     text-underline-offset: 4px;
-}
-
-button.registerBoxButton {
-    width: 395px;
-    height: 50px;
-    box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.12);
-    font-family: Montserrat;
-    font-size: 14px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.71;
-    letter-spacing: normal;
-    color: var(--white);
-    outline: none;
-    border: none;
-    margin-top: 51px;
-    background-color: var(--white-four);
-    pointer-events: none;
-}
-
-button.activeButton {
-    background-color: var(--pale-orange) !important;
-    pointer-events: all !important;
-}
-
-button.registerBoxButton:hover {
-    cursor: pointer;
-}
-
-button.registerBoxButton:active {
-    opacity: .7;
-}
-
-.errorStateStyle {
-    border: solid 1px var(--strawberry) !important;
-    background-color: rgba(246, 63, 69, 0.04) !important;
 }
 
 .spanBox {

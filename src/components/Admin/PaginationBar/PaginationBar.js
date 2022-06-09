@@ -97,13 +97,13 @@ function PaginationBar({entriesQty, onChangePage, maxShowEntries, onchangeMaxSho
                     <img className={styles.arrowIcon} src={arrowIcon} alt="dropdown menu" />
                     <div className={styles.rangeBox  + ' ' + styles.hidden}>
                         {
-                            [...Array(maxShowEntries)].map((e, i) => 
+                            [10, 5, 1].map((e, i) => 
                                 <div 
                                     key={i} 
                                     className={styles.rangeButton}
-                                    onClick={() => handleOnlickRangeButton(maxShowEntries - i)}
+                                    onClick={() => handleOnlickRangeButton(e)}
                                 >
-                                    {maxShowEntries - i}
+                                    {e}
                                 </div>
                             )
                         }

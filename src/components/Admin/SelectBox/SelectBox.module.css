@@ -47,7 +47,6 @@ span.label {
     letter-spacing: normal;
     text-align: right;
     color: var(--dark-grey);
-    margin-right: 20px;
     text-transform: uppercase
 }
 

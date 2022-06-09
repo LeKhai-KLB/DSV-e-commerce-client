@@ -1,5 +1,5 @@
 div.adminProductsContainer {
-    flex:1 850px;
+    flex: 1 1 880px;
     margin-bottom: 26px;    
     display: flex;
     flex-flow: column;

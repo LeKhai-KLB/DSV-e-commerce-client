@@ -15,7 +15,7 @@ function SearchBar({onChangeValue}) {
             <input 
                 value={searchValue} 
                 className={styles.searchInput} 
-                placeholder="Search product"
+                placeholder="Search..."
                 onChange={e => {
                     onChangeValue(e.target.value)
                     setSearchValue(e.target.value)

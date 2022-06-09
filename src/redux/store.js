@@ -11,7 +11,8 @@ PURGE,
 REGISTER, } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-import tempSlice from "./slices/tempSlice"
+import authReducer from './slices/authSlice'
+import cartReducer from './slices/cartSlice'
 
 const persistConfig = {
     key: 'root',
@@ -19,7 +20,8 @@ const persistConfig = {
 }
 
 const reducer = combineReducers({
-    temp: tempSlice.reducer
+    auth: authReducer,
+    cart: cartReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

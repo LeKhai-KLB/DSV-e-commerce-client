@@ -1,0 +1,18 @@
+div.filterPriceBoxContainer {
+    width: 100%;
+    padding: 15px 0px;
+}
+
+div.priceTitleContainer {
+    width: 100%;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.83;
+    letter-spacing: normal;
+    color: var(--greyish-brown);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px 
+}

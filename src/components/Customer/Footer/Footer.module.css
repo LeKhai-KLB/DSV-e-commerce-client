@@ -1,0 +1,29 @@
+.footerContainer{
+    width: 100%;
+    height: 185px;
+    border-top: 1px solid #ececec;
+    display: flex;
+    justify-content: center;
+}
+
+div.contentContainer {
+    width: calc(100% - 260px);
+    height: 100%;
+}
+
+/* top container */
+div.topContainer {
+    width: 100%;
+    height: 121px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid .8px #ececec;
+    align-items: center;
+}
+
+img.logo {
+    width: 132px;
+    height: 27px;
+    object-fit: contain;
+    object-position: center;
+}

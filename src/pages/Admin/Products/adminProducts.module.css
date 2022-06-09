@@ -1,0 +1,254 @@
+div.adminProductsContainer {
+    flex: 1 1 880px;
+    margin-bottom: 26px;    
+    display: flex;
+    flex-flow: column;
+}
+
+/* control container */
+div.controlContainer {
+    width: 100%;
+    flex: 0 0 48px;
+    margin-bottom: 32px;
+    display: flex;
+}
+
+/* left container */
+div.leftContainer {
+    flex: 0 0 40%;
+    display: flex;
+    align-items: center;
+}
+
+.labelStyle {
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: var(--greyish);
+    text-transform: uppercase;
+}
+
+div.mtl20 {
+    margin-left: 20px;
+}
+
+/* right container */
+div.rightContainer {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+div.addProductButton {
+    width: 156px;
+    height: 48px;
+    border-radius: 2px;
+    background-color: var(--pale-orange);
+    margin-left: 20px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+div.addProductButton:active {
+    opacity: .7;
+}
+
+div.exportButton {
+    width: 112px;
+    height: 48px;
+    border-radius: 2px;
+    border: solid 1px var(--white-three);
+    background-color: var(--white);
+    margin-left: 20px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: var(--pale-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+div.exportButton:active {
+    opacity: .7;
+}
+
+img.icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    margin-right: 8px;
+}
+
+/* entry container  */
+div.entriesContainer {
+    flex: 1;
+    border-radius: 2px;
+    box-shadow: 0 10px 24px 0 rgba(0, 0, 0, 0.08);
+    background-color: var(--white);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    position: relative;
+    z-index: 0;
+}
+
+/*  table */
+div.tableLine {
+    width: 100%;
+    position: absolute;
+    top: 63px;
+    background-color: var(--white-three);
+    height: 1px;
+    z-index: 2;
+}
+
+table.table {
+    width: calc(100% - 48px);
+    padding: 0px !important;
+    border-spacing: 0px;
+}
+
+tr > td:first-child, tr > th:first-child {
+    padding-left:24px
+}
+
+tr > th:last-child {
+    padding-right:24px
+}
+
+/*  title */
+tr.tableTitleContainer {
+    height: 64px;
+    background-color: var(--white);
+    text-align: left;
+}
+
+.displayFlexEffect {
+    display: flex;
+}
+
+/* entry */
+tr.tableEntry {
+    height: 64px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: var(--charcoal-grey);
+    position: relative;
+}
+
+tr.grayBackground {
+    background-color: var(--white-two);
+}
+
+/* products column */
+img.productImageEntry {
+    width: 30px;
+    height: 40px;
+    object-fit: cover;
+    object-position: center;
+}
+
+div.textEntry {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+span.textEntryTite {
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+span.textEntryCategory {
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.83;
+    letter-spacing: normal;
+    color: var(--greyish);
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+/* actions column */
+div.actionsContainer {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    justify-content: flex-end;
+}
+
+img.dropdownIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+}
+
+td.actionsBox {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: flex;
+    flex-flow: column;
+    border-radius: 2px;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.08);
+    background-color: var(--white);
+    z-index: 1;
+}
+
+.hiddenBox {
+    display: none !important;
+}
+
+div.actionsButton {
+    height: 46px;
+    width: 127px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+img.actionsIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    margin-left: 16px;
+    margin-right: 12px;
+}

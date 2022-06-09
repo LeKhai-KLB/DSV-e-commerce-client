@@ -1,0 +1,151 @@
+div.AddCategoryModalContainer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: calc(100% - 220px);
+    height: 100%;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 220px;
+}
+
+img.cancelIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+div.overlay {
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    background-color: var(--dark-grey);
+    position: absolute;
+    z-index: 1;
+}
+
+div.form {
+    width: 420px;
+    height: 505px;
+    background-color: var(--white);
+    position: absolute;
+    z-index: 2;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.03);
+}
+
+span.title {
+    margin-top: 30px;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+}
+
+span.validateMessage {
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.2;
+    letter-spacing: normal;
+    color: var(--strawberry);
+    margin-top: 4px;
+    visibility: hidden;
+}
+
+span.showValidate {
+    visibility: visible !important;
+}
+
+div.wrapper {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+div.field {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: var(--charcoal-grey);
+}
+
+span.label {
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.17;
+    letter-spacing: normal;
+    text-align: right;
+    color: var(--dark-grey);
+    opacity: .9;
+    text-transform: uppercase;
+}
+
+input.input {
+    outline: none;
+    width: 280px;
+    height: 48px;
+    padding-left: 16px;
+    border-radius: 2px;
+    border: solid 1px var(--white-three);
+    background-color: var(--white-two);
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: var(--charcoal-grey);
+    margin-top: 5px;
+}
+
+button.submitButton {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    height: 48px;
+    width: 300px;
+    background-color: var(--pale-orange);
+    color: var(--white);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.activeClick:active {
+    opacity: .7;
+}

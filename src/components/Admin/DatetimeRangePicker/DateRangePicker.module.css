@@ -1,0 +1,20 @@
+div.dateRangeContainer {
+    position: relative;
+    border: 1px solid var(--white-three);
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 0;
+    cursor: pointer;
+}
+
+img.dateRangeIcon {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    right: 16px;
+    top: 12px;
+    z-index: 1;
+}

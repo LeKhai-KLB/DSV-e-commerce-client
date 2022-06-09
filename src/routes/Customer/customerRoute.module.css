@@ -1,0 +1,13 @@
+.contentContainer {
+    margin-top: 115px;
+    width: calc(100% - 258px);
+    min-height: 711px;
+}
+
+.CustomerRouteContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -54,6 +54,8 @@ code {
 }
 
 html, body, #root{
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   --white: #fff;
   --charcoal-grey: #3d3d3f;

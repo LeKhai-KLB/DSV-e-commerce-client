@@ -1,0 +1,131 @@
+.paginationBarContainer {
+    width: calc(100% - 48px);
+    height: 32px;
+    position: absolute;
+    bottom: 32px;
+    display: flex;
+    align-items: center;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    text-align: center;
+    color: var(--charcoal-grey);
+}
+
+span.paginationTitle {
+    flex: 0 0 30%;
+    text-align: left;
+}
+
+div.paginationControlContainer {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+div.controller {
+    display: flex;
+    align-items: center;
+}
+
+img.paginationIcon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    object-position: center;
+    cursor: pointer;
+    border-radius: 2px;
+    border: solid 1px var(--white-three);
+    background-color: var(--white);
+}
+
+div.highlight {
+    pointer-events: none;
+    color: var(--white) !important;
+    border: solid 1px var(--pale-orange) !important;
+    background-color: var(--pale-orange) !important;
+}
+
+div.numberBox {
+    width: 32px;
+    height: 32px;
+    border: solid 1px var(--white-three);
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+div.numberInactiveBox {
+    width: 32px;
+    height: 32px;
+    border: solid 1px var(--white-three);
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: .4;
+}
+
+div.numberBox:active, img.paginationIcon:active {
+    opacity: .7;
+}
+
+div.selectionBox {
+    height: 100%;
+    margin-right: 24px;
+    padding-left: 9px;
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+    border: solid 1px var(--white-three);
+    background-color: var(--white);
+    cursor: pointer;
+    position: relative
+}
+
+img.arrowIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    transform: rotate(180deg);
+}
+
+.inactive {
+    pointer-events: none;
+    opacity: .4;
+}
+
+div.rangeBox {
+    position: absolute;
+    bottom: 100%; 
+    left: 0px;
+    flex-flow: column;
+    border-radius: 2px;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.08);
+    background-color: var(--white);
+    z-index: 3;
+}
+
+.hidden {
+    display: none !important;
+}
+
+div.rangeButton {
+    width: 42px;
+    height: 32px;
+}
+
+div.rangeButton:active {
+    opacity: .7;
+}
+

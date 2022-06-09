@@ -1,0 +1,377 @@
+div.adminOrdersPageContainer {
+    flex: 1 1 880px;
+    margin-bottom: 26px;    
+    display: flex;
+    flex-flow: column;
+}
+
+/* general styles */
+img.icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    margin-right: 8px;
+}
+
+.highlight {
+    background-color: var(--pale-orange) !important;
+    color: var(--white) !important;
+}
+
+.labelStyle {
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: var(--greyish);
+    text-transform: uppercase;
+}
+
+.overStackTextOfBox {
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.green {
+    background-color: var(--pea-green);
+}
+
+.yellow {
+    background-color: #fbba4e;
+}
+
+.red {
+    background-color: #f05d62;
+}
+
+div.stateBox {
+    width: 70px;
+    height: 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: center;
+    color: var(--white);
+}
+
+tr.grayBackground {
+    background-color: var(--white-two);
+}
+
+/* control container */
+div.controlContainer {
+    width: 100%;
+    flex: 0 0 48px;
+    margin-bottom: 32px;
+    display: flex;
+}
+
+/* left container */
+div.leftContainer {
+    flex: 0 0 60%;
+    display: flex;
+    align-items: center;
+}
+
+div.dateTimeButton {
+    height: 48px;
+    padding: 0px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    text-align: center;
+    color: var(--charcoal-grey);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px var(--white-three);
+    background-color: var(--white);
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+img.reloadIcon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    object-position: center;
+    margin-left: 12px;
+    opacity: .7;
+    cursor: pointer;
+}
+
+img.reloadIcon:active {
+    opacity: .3;
+}
+
+div.dateTimeButton:active {
+    opacity: .8;
+}
+
+/* right container */
+div.rightContainer {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+div.exportButton {
+    width: 112px;
+    height: 48px;
+    border-radius: 2px;
+    border: solid 1px var(--white-three);
+    background-color: var(--white);
+    margin-left: 20px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: var(--pale-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+div.exportButton:active {
+    opacity: .7;
+}
+
+/* entry container  */
+div.entriesContainer {
+    flex: 1;
+    border-radius: 2px;
+    box-shadow: 0 10px 24px 0 rgba(0, 0, 0, 0.08);
+    background-color: var(--white);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    position: relative;
+    z-index: 0;
+    position: relative;
+}
+
+/*  table */
+div.tableLine {
+    width: 100%;
+    position: absolute;
+    top: 63px;
+    background-color: var(--white-three);
+    height: 1px;
+    z-index: 2;
+}
+
+table.table {
+    width: calc(100% - 48px);
+    padding: 0px !important;
+    border-spacing: 0px;
+    z-index: 1;
+}
+
+tr > td:first-child, tr > th:first-child {
+    padding-left:24px
+}
+
+tr > th:last-child {
+    padding-right:24px
+}
+
+/*  title */
+tr.tableTitleContainer {
+    height: 64px;
+    background-color: var(--white);
+    text-align: left;
+}
+
+/* entry */
+tr.tableEntry {
+    height: 64px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: var(--charcoal-grey);
+    position: relative;
+}
+
+/* actions field */
+div.actionsContainer {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    justify-content: flex-end;
+}
+
+img.dropdownIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+}
+
+/*  actions box */
+td.actionsBox {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    border-radius: 2px;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.08);
+    background-color: var(--white);
+    z-index: 1;
+}
+
+div.actionButton {
+    width: 193px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    cursor: pointer;
+}
+
+div.statusColorBox {
+    width: 10px;
+    height: 10px;
+    margin: 0px 16px 0px 12px;
+    border-radius: 50%;
+}
+
+div.showViewBoxButton {
+    border-top: 0.5px solid var(--greyish);
+    width: 168px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    cursor: pointer;
+}
+
+img.actionsIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* details box */
+div.detailsContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+}
+
+div.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* details box */
+div.detailsBox {
+    position: absolute;
+    z-index: 2;
+    width: 30%;
+    border-radius: 2px;
+    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.03);
+    background-color: var(--white);
+    top: 120px;
+    padding-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+span.detailsBoxTitle {
+    margin-top: 20px;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+}
+
+.textarea {
+    resize: none;
+    outline: none;
+    width: calc(100% - 72px);
+    margin: 20px;
+    height: 200px;
+    padding: 14px 16px;
+    border-radius: 2px;
+    border: solid 1px var(--pinkish-grey);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: var(--white);
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: var(--greyish-brown);
+}
+
+textarea::-webkit-scrollbar {
+    display: none;
+}
+
+div.detailsButton {
+    width: calc(100% - 40px);
+    height: 35px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    background-color: var(--pale-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: var(--white);
+    cursor: pointer;
+}
+
+
+

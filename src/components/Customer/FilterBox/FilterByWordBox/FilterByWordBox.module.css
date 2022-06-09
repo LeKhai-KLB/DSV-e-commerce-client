@@ -1,0 +1,36 @@
+div.filterByWordBoxContainer {
+    width: 100%;
+    padding: 15px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+div.filterBox {
+    width: 100%;
+    height: 35px;
+    background-color: #fafafa;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: var(--greyish-brown);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+img.icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+    margin-right: 5px;
+}
+
+div.highlight {
+    font-weight: 600;
+    color: var(--pale-orange);
+}

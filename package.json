@@ -61,7 +61,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://dsv-ecommerce-app-server.herokuapp.com/",
   "devDependencies": {
     "gh-pages": "^4.0.0"
   }

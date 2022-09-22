@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/DSV-e-commerce-client/static/css/main.c207c0e6.css",
+    "main.js": "/DSV-e-commerce-client/static/js/main.3d4dda5a.js",
+    "static/media/main-thumb.jpg": "/DSV-e-commerce-client/static/media/main-thumb.4a9f03ea1bd10aa3736f.jpg",
+    "static/media/rectangle-5@2x.png": "/DSV-e-commerce-client/static/media/rectangle-5@2x.94115224a297cac24666.png",
+    "static/media/ladies-thumb.jpg": "/DSV-e-commerce-client/static/media/ladies-thumb.98c51d20c9df24c3f990.jpg",
+    "static/media/girls-thumb.jpg": "/DSV-e-commerce-client/static/media/girls-thumb.a68e616caa5c624299af.jpg",
+    "static/media/rectangle-5.png": "/DSV-e-commerce-client/static/media/rectangle-5.d906d288bd5d77f7164a.png",
+    "static/media/boys-thumb.jpg": "/DSV-e-commerce-client/static/media/boys-thumb.4a446a1767ec03945548.jpg",
+    "static/media/men-thumb.jpg": "/DSV-e-commerce-client/static/media/men-thumb.11167066c58551c05511.jpg",
+    "static/media/dump1.png": "/DSV-e-commerce-client/static/media/dump1.37f5994a48f8aeca86bc.png",
+    "static/media/placeholder.png": "/DSV-e-commerce-client/static/media/placeholder.277a2563f7ba0332c871.png",
+    "static/media/question.png": "/DSV-e-commerce-client/static/media/question.a97e45146636971d8892.png",
+    "static/media/cancel.png": "/DSV-e-commerce-client/static/media/cancel.dcf94367e9379947f510.png",
+    "static/media/accept.png": "/DSV-e-commerce-client/static/media/accept.ff7909c0a647051d6906.png",
+    "static/media/warning.png": "/DSV-e-commerce-client/static/media/warning.dea45809675966a80875.png",
+    "index.html": "/DSV-e-commerce-client/index.html",
+    "main.c207c0e6.css.map": "/DSV-e-commerce-client/static/css/main.c207c0e6.css.map",
+    "main.3d4dda5a.js.map": "/DSV-e-commerce-client/static/js/main.3d4dda5a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c207c0e6.css",
+    "static/js/main.3d4dda5a.js"
+  ]
+}

@@ -7,7 +7,7 @@ jobs:
   build-and-deploy:
     name: Build and Deploy e-commerce app
     runs-on: ubuntu-lastest
-    enviorment:
+    environment:
       REACT_APP_SOCKET_HOST=https://LeKhai-KLB.github.io/DSV-e-commerce-client
       REACT_APP_LOGIN_API=/api/user/login
       REACT_APP_REGISTER_API=/api/user/register

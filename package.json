@@ -1,5 +1,4 @@
 {
-  "homepage": "https://LeKhai-KLB.github.io/DSV-e-commerce-client",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -61,6 +60,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "https://dsv-ecommerce-app-server.herokuapp.com/",
   "devDependencies": {
     "gh-pages": "^4.0.0"
   }
